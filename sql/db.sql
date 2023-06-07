@@ -40,7 +40,9 @@ CREATE TABLE webshop.bestellungen(
     bestellungID int PRIMARY KEY AUTO_INCREMENT,
     datum date,
     const_userID int,
-    artikelID int
+    artikelID int,
+    userID int,
+    FOREIGN KEY (userID) REFERENCES User (userID),
 );
 
 CREATE TABLE webshop.BestellungenPos(
@@ -48,6 +50,3 @@ CREATE TABLE webshop.BestellungenPos(
     AID int,
     anzahl int
 );
-
-ALTER TABLE webshop.bestellungen
-ADD CONSTRAINT const_userID FOREIGN KEY (webshop.User) REFERENCES 
