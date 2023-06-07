@@ -17,7 +17,7 @@ CREATE TABLE webshop.User(
 
 CREATE TABLE webshop.Kategorie(
     kategorieID int PRIMARY KEY AUTO_INCREMENT,
-    bezeichnung varchar(255) NOT NULL,
+    bezeichnung varchar(255) NOT NULL
 
 );
 
@@ -33,20 +33,28 @@ CREATE TABLE webshop.Artikel(
     hersteller varchar(255),
     kategorieA varchar(15),
     kategorieB varchar(15),
-    kategorieC varchar(15)
+    kategorieC varchar(15),
+    FOREIGN KEY (kategorieA) REFERNECES Kategorie(kategorieID),
+    FOREIGN KEY (kategorieB) REFERNECES Kategorie(kategorieID),
+    FOREIGN KEY (kategorieC) REFERNECES Kategorie(kategorieID)
+    
     );
 
-CREATE TABLE webshop.bestellungen(
+CREATE TABLE webshop.Bestellungen(
     bestellungID int PRIMARY KEY AUTO_INCREMENT,
     datum date,
     const_userID int,
     artikelID int,
     userID int,
-    FOREIGN KEY (userID) REFERENCES User (userID),
+    FOREIGN KEY (userID) REFERENCES User (userID)
 );
 
 CREATE TABLE webshop.BestellungenPos(
-    BID int,
-    AID int,
+    bestellungID int,
+    artikelID int,
     anzahl int
+    PRIMARY KEY (bestellungID, artikelID),
+    FOREIGN KEY (bestellungID) REFERENCES Bestellungen(bestellungID),
+    FOREIGN KEY (artikelID) REFERENCES Artikel(artikelID)
+    
 );
