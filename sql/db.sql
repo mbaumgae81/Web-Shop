@@ -31,12 +31,12 @@ CREATE TABLE webshop.Artikel(
     beschreibung varchar(255),
     verfuegbar boolean,
     hersteller varchar(255),
-    kategorieA varchar(15),
-    kategorieB varchar(15),
-    kategorieC varchar(15),
-    FOREIGN KEY (kategorieA) REFERNECES Kategorie(kategorieID),
-    FOREIGN KEY (kategorieB) REFERNECES Kategorie(kategorieID),
-    FOREIGN KEY (kategorieC) REFERNECES Kategorie(kategorieID)
+    kategorieA int,
+    kategorieB int,
+    kategorieC int,
+    FOREIGN KEY (kategorieA) REFERENCES Kategorie(kategorieID),
+    FOREIGN KEY (kategorieB) REFERENCES Kategorie(kategorieID),
+    FOREIGN KEY (kategorieC) REFERENCES Kategorie(kategorieID)
     
     );
 
@@ -52,7 +52,7 @@ CREATE TABLE webshop.Bestellungen(
 CREATE TABLE webshop.BestellungenPos(
     bestellungID int,
     artikelID int,
-    anzahl int
+    anzahl int,
     PRIMARY KEY (bestellungID, artikelID),
     FOREIGN KEY (bestellungID) REFERENCES Bestellungen(bestellungID),
     FOREIGN KEY (artikelID) REFERENCES Artikel(artikelID)
