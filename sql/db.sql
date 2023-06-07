@@ -1,3 +1,6 @@
+-- Start Script zur initialisierung der Datenbank WebShop
+-- V 0.1
+
 CREATE DATABASE webshop;
 use webshop;
 CREATE TABLE webshop.User(
@@ -31,20 +34,20 @@ CREATE TABLE webshop.Artikel(
     kategorieA varchar(15),
     kategorieB varchar(15),
     kategorieC varchar(15)
-    )
+    );
 
 CREATE TABLE webshop.bestellungen(
     bestellungID int PRIMARY KEY AUTO_INCREMENT,
     datum date,
     const_userID int,
     artikelID int
-)
+);
 
 CREATE TABLE webshop.BestellungenPos(
     BID int,
     AID int,
     anzahl int
-)
+);
 
 ALTER TABLE webshop.bestellungen
-ADD CONSTRAINT const_userID FOREIGN KEY (webshop.User) REFERENCES userID userID;
+ADD CONSTRAINT const_userID FOREIGN KEY (webshop.User) REFERENCES 
