@@ -21,7 +21,7 @@ if ($conn->connect_error) {
             $beschreibung = $_POST['beschreibung'];
             $hersteller = $_POST['hersteller'];
 
-            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis) VALUES(?, ?,?,?,?,?)"; // @todo die restlichen einträge nachzihen.
+            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar) VALUES(?, ?,?,?,?,?)"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
             $statement->bind_param('sssdss', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller);
                 //i - integer
