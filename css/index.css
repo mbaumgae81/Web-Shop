@@ -1,21 +1,26 @@
+html{
+    
+}
 .grid-container{
     /* anzeigen und anordnung von grid   */
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-auto-rows: 150px 250px 250px 100px;
+    grid-template-columns: 20% 16% 16% 16% 16% 16%;
+    grid-auto-rows: 100px 250px 250px 100px;
     grid-template-areas: 
-    'header header header header header header'
-    'menu menu drei drei vier vier'
-    'menu menu fünf fünf sechs sechs'
-    'menu menu footer footer footer footer';   
+    'header  header header header header'
+    'menu  drei drei vier vier'
+    'menu  fünf fünf sechs sechs'
+    'menu  footer footer footer footer';   
     
     /* erscheinungsbild   */
     background-color: lightblue;
-    gap: 5px;
+    
 }   
 
 .item-1 { grid-area: header; }
-.item-2 { grid-area: menu; }
+.sidebar { 
+    grid-area: menu;    
+ }
 
 .item-3 { grid-area: drei; display: flex; justify-content: center; }
 .item-4 { grid-area: vier; display: flex; justify-content: center; }
@@ -28,7 +33,7 @@
   text-align: center;
   
   font-size: 10px;
-  margin: 5px;
+  margin: 1px;
 }
 nav{
     display: flex;
