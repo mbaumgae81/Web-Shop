@@ -10,25 +10,32 @@ include("adminheader.php");
             <td><input type="file" name="image" /> </td>
         </tr>
         <tr>
-            <td>Artilenamen:</td>
-            <td><input type="text" name='artikelName'></td>
+            <td>Artikelnamen:</td>
+            <td><input type="text" name='artikelName' placehodler="Artikel name" ></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <td>Beschreibung: </td>
+            <td><input type="textarea" name = 'beschreibung' placeholder="Beschreibnung"></td>
         </tr>
         <tr>
             <td>Preis:</td>
             <td><input type="number" step="0.01" name ='preis'></td>
         </tr>
-
+        <tr>
+            <td>Hersteller: </td>
+            <td><input type="text" name="hersteller" placeholder="Hersteller" id=""></td>
+        </tr>
+        <tr>
+            <td>Ist verfügbar: </td>
+            <td>input type="checkbox" name="verfuegbar" id=""><br></td>
+        </tr>
   <br>
 
 
 <!--
-Beschreibung: <input type="text" name = 'beschreibung'><br>
+<br>
 Ist verfügbar: <input type="checkbox" name="verfuegbar" id=""><br>
-Hersteller: <input type="text" name="hersteller" id=""><br>
+
 -->
     </table>
 <button type="submit" name="upload">upload</button>

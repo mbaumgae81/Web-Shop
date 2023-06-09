@@ -18,11 +18,13 @@ if ($conn->connect_error) {
             $imgType = $_FILES['image']['type'];
             $name = $_POST['artikelName'];
             $preis = $_POST['preis'];
+            $beschreibung = $_POST['beschreibung'];
+            $hersteller = $_POST['hersteller'];
 
-            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis) VALUES(?, ?,?,?)"; // @todo die restlichen einträge nachzihen.
+            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis) VALUES(?, ?,?,?,?,?)"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
-            $statement->bind_param('sssd', $imgType, $imgData,$name, $preis );
-                // - integer     
+            $statement->bind_param('sssdss', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller);
+                //i - integer
                 //d - double
                 //s - string
                 //b - BLOB  
