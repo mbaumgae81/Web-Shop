@@ -1,33 +1,37 @@
-html{
-    
-}
-.grid-container{
-    /* anzeigen und anordnung von grid   */
+
+.grid-container {
     display: grid;
-    grid-template-columns: 20% 16% 16% 16% 16% 16%;
-    grid-auto-rows: 100px 250px 250px 100px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-auto-rows: 100px auto auto 100px; /* Adjusted row heights */
     grid-template-areas: 
-    'header  header header header header'
-    'menu  drei drei vier vier'
-    'menu  fünf fünf sechs sechs'
-    'menu  footer footer footer footer';   
+        'header  header header header header'
+        'menu  drei drei vier vier'
+        'menu  fünf fünf sechs sechs'
+        'menu  footer footer footer footer';   
     
-    /* erscheinungsbild   */
     background-color: lightblue;
-    
-}   
+}  
 
 .item-1 { grid-area: header; }
 .sidebar { 
     grid-area: menu;    
  }
 
-.item-3 { grid-area: drei; display: flex; justify-content: center; }
-.item-4 { grid-area: vier; display: flex; justify-content: center; }
-.item-5 { grid-area: fünf; display: flex; justify-content: center;  }
-.item-6 { grid-area: sechs; display: flex; justify-content: center;  }
-.item-7 { grid-area: footer; display: flex; justify-content: center;  }
+  /* anpassung der Artikel  bild unt Text horizontal oder vertikal?  */
+.item-3 { grid-area: drei;  }
+.item-4 { grid-area: vier; display: flex; justify-content: space-evenly; align-items: center; }
+.item-5 { grid-area: fünf; display: flex; justify-content: space-evenly; align-items: center;  }
+.item-6 { grid-area: sechs; display: flex; justify-content: space-evenly; align-items: center;  }
+.item-7 { grid-area: footer; display: flex; justify-content: space-evenly; align-items: center;  }
 
+#article {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent wrapping of content */
+}
+ /* ######################### */
 .grid-container > div {
   background-color: lightseagreen;
   text-align: center;
@@ -38,11 +42,19 @@ html{
 nav{
     display: flex;
     justify-content: space-evenly;
-    position: relative;
-    border: 1px solid #000000;
+    
+    
 }
 
 li {
+    width: 15%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    
     list-style: none;
     border-color: blue;
     border-width: 1px;
