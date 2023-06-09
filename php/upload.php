@@ -20,10 +20,11 @@ if ($conn->connect_error) {
             $preis = $_POST['preis'];
             $beschreibung = $_POST['beschreibung'];
             $hersteller = $_POST['hersteller'];
+            $verfuegbar = $_POST['erfuegbar'];
 
-            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar) VALUES(?, ?,?,?,?,?)"; // @todo die restlichen einträge nachzihen.
+            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar) VALUES(?, ?,?,?,?,?,? )"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
-            $statement->bind_param('sssdss', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller);
+            $statement->bind_param('sssdss', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller, $verfuegbar);
                 //i - integer
                 //d - double
                 //s - string

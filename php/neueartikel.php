@@ -7,19 +7,19 @@ include("adminheader.php");
     <table>
         <tr>
             <td> Datei auswählen:</td>
-            <td><input type="file" name="image" /> </td>
+            <td><input type="file" name="image" accept=".png,.jpg,.jpeg" > </td>
         </tr>
         <tr>
             <td>Artikelnamen:</td>
-            <td><input type="text" name='artikelName' placehodler="Artikel name" ></td>
+            <td><input type="text" name="artikelName" ></td>
         </tr>
         <tr>
             <td>Beschreibung: </td>
-            <td><input type="textarea" name = 'beschreibung' placeholder="Beschreibnung"></td>
+            <td><input type="text" name = "beschreibung" placeholder="Beschreibnung"></td>
         </tr>
         <tr>
             <td>Preis:</td>
-            <td><input type="number" step="0.01" name ='preis'></td>
+            <td><input type="number" step="0.01" name ="preis"></td>
         </tr>
         <tr>
             <td>Hersteller: </td>
