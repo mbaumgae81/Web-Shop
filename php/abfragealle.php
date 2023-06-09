@@ -1,4 +1,6 @@
 <?php
+// TODO mit mehreren abfragen testen !! derzeit zu wenige einträge .
+
 session_start();
 // GET Variable
 $page = '';
@@ -20,16 +22,16 @@ include("util.inc.php");
 
 $conn = new_db_connect();
 
-$sql = "SELECT * FROM Artikel limit ?,?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("dd",  $start_from, $res_per_page);
+$sql = "SELECT * FROM Artikel limit ?,?";                                           // Prepared Statement
+$stmt = $conn->prepare($sql);                                                       // Prepared Statement
+$stmt->bind_param("dd",  $start_from, $res_per_page);               // Prepared Statement
 
 $stmt->execute();
 $result = $stmt->get_result();
 
 
 if (!$result) {
-    die('Could not query:'. $conn->error);
+    die('Could not query:'. $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
 }
 
 
@@ -39,7 +41,7 @@ if (!$result) {
     $eintragC = $seite+2;
     $eintragD = $seite+3;
 
-   $result->data_seek($eintragA); // data seek sprint an eine vorgegebene row
+   $result->data_seek($eintragA); // data seek springt an eine vorgegebene row
    $row = $result->fetch_array();
 
    $result->data_seek($eintragB);
@@ -91,7 +93,7 @@ if (!$result) {
     </tr>
 </table>
 <?PHP
-// SQL Abfrage ausführen
+// SQL Abfrage für menge
 $db = "select * from Artikel";
 $result = $conn->query($db);
 // Anzahl der Ergebnisse aus SQL Abfrage
@@ -100,12 +102,11 @@ $total_records = $result->num_rows;
 $total_pages = ceil($total_records / $res_per_page);
 $conn->close();
 ?>
-<form action="abfragealle.php" method="get">
-    <input type="submit" name="add" value="add" />
-</form>
+
 <?php
 // Navigations Links nächste Seite etc.
-echo "<p><a href='./'>".'[Start]'."</a> ";
+
+// echo "<p><a href='./'>".'[Start]'."</a> ";
     // For Schleife für Seitendurchlauf
     for ($i = 1; $i <= $total_pages; $i++) {
     echo "<a href='?page=".$i."'>Seite ".$i."</a> ";
@@ -115,7 +116,7 @@ echo "<p><a href='./'>".'[Start]'."</a> ";
 
 echo '</div>';
 ?>
-<!-- <input type="button" id="C2" value="test" onclick="<?php $seite=$seite+4;?>" /> -->
+<?php $seite=$seite+4;?>
 <?php //echo $seite;
 echo $_SESSION['capnum'];
 ?>
