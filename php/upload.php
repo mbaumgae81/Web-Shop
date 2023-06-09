@@ -20,6 +20,7 @@ if ($conn->connect_error) {
             $preis = $_POST['preis'];
 
             $sql = "INSERT INTO Artikel(bildType ,bild,name,preis) VALUES(?, ?,?,?)"; // @todo die restlichen einträge nachzihen.
+
             $statement = $conn->prepare($sql);
             $statement->bind_param('sssd', $imgType, $imgData,$name, $preis );
                 // - integer     
@@ -35,7 +36,9 @@ if ($conn->connect_error) {
     $conn->close();
 
 }
+
 header('location: neueartikel.php');  // nach dem Upload back to admin
+
 
 
 ?>
