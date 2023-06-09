@@ -24,7 +24,7 @@ if ($conn->connect_error) {
 
             $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar) VALUES(?, ?,?,?,?,?,? )"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
-            $statement->bind_param('sssdss', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller, $verfuegbar);
+            $statement->bind_param('sssdssi', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller, $verfuegbar);
                 //i - integer
                 //d - double
                 //s - string

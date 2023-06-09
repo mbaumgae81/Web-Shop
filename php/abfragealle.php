@@ -34,7 +34,6 @@ if (!$result) {
     die('Could not query:'. $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
 }
 
-
     $seite =0;
     $eintragA = $seite;
     $eintragB = $seite+1;
@@ -52,11 +51,6 @@ if (!$result) {
 
     $result->data_seek($eintragD);
     $rowD = $result->fetch_array();
-
-
-
-
-
 //
 
 ?>
@@ -64,34 +58,69 @@ if (!$result) {
 <body>
 <table>
     <tr>
-        <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($row['bild']).'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($row['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($row['preis']."€"); ?></td>
-        <td></td>
-
+        <th>Artikel Bild</th>
+        <th>Artikel Name</th>
+        <th>Artikel Preis</th>
+        <th>Artikel Beschreibung</th>
+        <th>Hersteller</th>
+        <th>verfuegbar</th>
+        <th>Löschen</th>
+        <th>Ändern</th>
     </tr>
     <tr>
-        <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowB['bild']).'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($rowB['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($rowB['preis']."€"); ?></td>
-        <td></td>
 
+        <td><?PHP echo ' <img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($row['bild']).'"/>'; ?></td>
+        <td><?PHP echo 'Name :'.($row['name']); ?></td>
+        <td><?PHP echo ($row['preis']."€"); ?></td>
+        <td><?PHP echo ($row['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($row['hersteller']); ?></td>
+        <td><?PHP echo ($row['verfuegbar']); ?></td>
+        <td>
+            <form action="deleteArtikel.php" method="post">
+            <input type="radio" name="zeile" value="<?PHP echo $row['artikelID'] ?>" >
+             </td>
+        <td>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowB['bild']).'"/>'; ?></td>
+        <td><?PHP echo ($rowB['name']); ?></td>
+        <td><?PHP echo ($rowB['preis']."€"); ?></td>
+        <td><?PHP echo ($rowB['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($rowB['hersteller']); ?></td>
+        <td><?PHP echo ($rowB['verfuegbar']); ?></td>
+        <td>
+            <form action="deleteArtikel.php" method="post">
+                <input type="hidden" name="zeile" value="<?PHP echo $rowB['artikelID'] ?>" >
+        </td>
+        <td>
+            <input type="submit" name="löschen" value="löschen" >
+        </td>
     </tr>
     <tr>
         <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowC['bild']).'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($rowC['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($rowC['preis']."€"); ?></td>
-        <td></td>
-
+        <td><?PHP echo ($rowC['name']); ?></td>
+        <td><?PHP echo ($rowC['preis']."€"); ?></td>
+        <td><?PHP echo ($rowC['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($rowC['hersteller']); ?></td>
+        <td><?PHP echo ($rowC['verfuegbar']); ?></td>
+        <td>
+           </td>
     </tr>
     <tr>
         <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowD['bild'] ) .'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($rowD['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($rowD['preis']."€"); ?></td>
-        <td></td>
-
+        <td><?PHP echo ($rowD['name']); ?></td>
+        <td><?PHP echo ($rowD['preis']."€"); ?></td>
+        <td><?PHP echo ($rowD['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($rowD['hersteller']); ?></td>
+        <td><?PHP echo ($rowD['verfuegbar']); ?></td>
+        <td>
+            </td>
     </tr>
 </table>
+<input type="submit" name="löschen" value="löschen" >
 <?PHP
 // SQL Abfrage für menge
 $db = "select * from Artikel";

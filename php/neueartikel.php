@@ -11,7 +11,7 @@ include("adminheader.php");
         </tr>
         <tr>
             <td>Artikelnamen:</td>
-            <td><input type="text" name="artikelName" ></td>
+            <td><input type="text" name="artikelName" placeholder="Name des Artikels" ></td>
         </tr>
         <tr>
             <td>Beschreibung: </td>
@@ -27,9 +27,9 @@ include("adminheader.php");
         </tr>
         <tr>
             <td>Ist verfügbar: </td>
-            <td>input type="checkbox" name="verfuegbar" id=""><br></td>
+            <td><input type="checkbox" name="verfuegbar" value="1"> </td>
         </tr>
-  <br>
+
 
 
 <!--

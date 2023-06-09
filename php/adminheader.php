@@ -19,6 +19,9 @@
         <li>
             <a href="../index.html">Zur Startseite</a>
         </li>
+        <li>
+            <a href="neuekategorie.php" >Kategorien erstellen</a>
+        </li>
 
     </ul>
 </header>
