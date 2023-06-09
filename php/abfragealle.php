@@ -104,7 +104,7 @@ $conn->close();
     <input type="submit" name="add" value="add" />
 </form>
 <?php
-
+// Navigations Links nächste Seite etc.
 echo "<p><a href='./'>".'[Start]'."</a> ";
     // For Schleife für Seitendurchlauf
     for ($i = 1; $i <= $total_pages; $i++) {
