@@ -22,7 +22,9 @@ if ($conn->connect_error) {
             $hersteller = $_POST['hersteller'];
             $verfuegbar = $_POST['erfuegbar'];
 
+
             $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar) VALUES(?, ?,?,?,?,?,? )"; // @todo die restlichen einträge nachzihen.
+
             $statement = $conn->prepare($sql);
             $statement->bind_param('sssdssi', $imgType, $imgData,$name, $preis ,$beschreibung, $hersteller, $verfuegbar);
                 //i - integer
@@ -38,7 +40,9 @@ if ($conn->connect_error) {
     $conn->close();
 
 }
+
 header('location: neueartikel.php');  // nach dem Upload back to admin
+
 
 
 ?>

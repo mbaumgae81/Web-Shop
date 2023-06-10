@@ -18,6 +18,7 @@ $start_from = ($page-1) * $res_per_page;
 
 
 include("adminheader.php");
+
 include("util.inc.php");
 
 $conn = new_db_connect();
@@ -31,7 +32,10 @@ $result = $stmt->get_result();
 
 
 if (!$result) {
-    die('Could not query:'. $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
+
+    die('Could not query:'. $conn->error);
+
+
 }
 
     $seite =0;
@@ -42,6 +46,7 @@ if (!$result) {
 
    $result->data_seek($eintragA); // data seek springt an eine vorgegebene row
    $row = $result->fetch_array();
+
 
    $result->data_seek($eintragB);
    $rowB = $result->fetch_array();
@@ -152,3 +157,8 @@ echo $_SESSION['capnum'];
 </body>
 
 </html>
+
+$conn->close();
+
+?>
+
