@@ -1,4 +1,6 @@
 <?php
+// TODO mit mehreren abfragen testen !! derzeit zu wenige einträge .
+
 session_start();
 // GET Variable
 $page = '';
@@ -21,19 +23,20 @@ include("util.inc.php");
 
 $conn = new_db_connect();
 
-$sql = "SELECT * FROM Artikel limit ?,?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("dd",  $start_from, $res_per_page);
+$sql = "SELECT * FROM Artikel limit ?,?";                                           // Prepared Statement
+$stmt = $conn->prepare($sql);                                                       // Prepared Statement
+$stmt->bind_param("dd",  $start_from, $res_per_page);               // Prepared Statement
 
 $stmt->execute();
 $result = $stmt->get_result();
 
 
 if (!$result) {
+
     die('Could not query:'. $conn->error);
 
-}
 
+}
 
     $seite =0;
     $eintragA = $seite;
@@ -41,7 +44,7 @@ if (!$result) {
     $eintragC = $seite+2;
     $eintragD = $seite+3;
 
-   $result->data_seek($eintragA); // data seek sprint an eine vorgegebene row
+   $result->data_seek($eintragA); // data seek springt an eine vorgegebene row
    $row = $result->fetch_array();
 
 
@@ -53,11 +56,6 @@ if (!$result) {
 
     $result->data_seek($eintragD);
     $rowD = $result->fetch_array();
-
-
-
-
-
 //
 
 ?>
@@ -65,36 +63,71 @@ if (!$result) {
 <body>
 <table>
     <tr>
-        <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($row['bild']).'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($row['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($row['preis']."€"); ?></td>
-        <td></td>
-
+        <th>Artikel Bild</th>
+        <th>Artikel Name</th>
+        <th>Artikel Preis</th>
+        <th>Artikel Beschreibung</th>
+        <th>Hersteller</th>
+        <th>verfuegbar</th>
+        <th>Löschen</th>
+        <th>Ändern</th>
     </tr>
     <tr>
-        <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowB['bild']).'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($rowB['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($rowB['preis']."€"); ?></td>
-        <td></td>
 
+        <td><?PHP echo ' <img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($row['bild']).'"/>'; ?></td>
+        <td><?PHP echo 'Name :'.($row['name']); ?></td>
+        <td><?PHP echo ($row['preis']."€"); ?></td>
+        <td><?PHP echo ($row['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($row['hersteller']); ?></td>
+        <td><?PHP echo ($row['verfuegbar']); ?></td>
+        <td>
+            <form action="deleteArtikel.php" method="post">
+            <input type="radio" name="zeile" value="<?PHP echo $row['artikelID'] ?>" >
+             </td>
+        <td>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowB['bild']).'"/>'; ?></td>
+        <td><?PHP echo ($rowB['name']); ?></td>
+        <td><?PHP echo ($rowB['preis']."€"); ?></td>
+        <td><?PHP echo ($rowB['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($rowB['hersteller']); ?></td>
+        <td><?PHP echo ($rowB['verfuegbar']); ?></td>
+        <td>
+            <form action="deleteArtikel.php" method="post">
+                <input type="hidden" name="zeile" value="<?PHP echo $rowB['artikelID'] ?>" >
+        </td>
+        <td>
+            <input type="submit" name="löschen" value="löschen" >
+        </td>
     </tr>
     <tr>
         <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowC['bild']).'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($rowC['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($rowC['preis']."€"); ?></td>
-        <td></td>
-
+        <td><?PHP echo ($rowC['name']); ?></td>
+        <td><?PHP echo ($rowC['preis']."€"); ?></td>
+        <td><?PHP echo ($rowC['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($rowC['hersteller']); ?></td>
+        <td><?PHP echo ($rowC['verfuegbar']); ?></td>
+        <td>
+           </td>
     </tr>
     <tr>
         <td><?PHP echo '<img height="200px" width="200px" src="data:image/jpeg;base64,'.base64_encode($rowD['bild'] ) .'"/>'; ?></td>
-        <td><?PHP echo 'Name :'.($rowD['name']); ?></td>
-        <td><?PHP echo 'Preis :'.($rowD['preis']."€"); ?></td>
-        <td></td>
-
+        <td><?PHP echo ($rowD['name']); ?></td>
+        <td><?PHP echo ($rowD['preis']."€"); ?></td>
+        <td><?PHP echo ($rowD['beschreibung']."€"); ?></td>
+        <td><?PHP echo ($rowD['hersteller']); ?></td>
+        <td><?PHP echo ($rowD['verfuegbar']); ?></td>
+        <td>
+            </td>
     </tr>
 </table>
+<input type="submit" name="löschen" value="löschen" >
 <?PHP
-// SQL Abfrage ausführen
+// SQL Abfrage für menge
 $db = "select * from Artikel";
 $result = $conn->query($db);
 // Anzahl der Ergebnisse aus SQL Abfrage
@@ -103,12 +136,11 @@ $total_records = $result->num_rows;
 $total_pages = ceil($total_records / $res_per_page);
 $conn->close();
 ?>
-<form action="abfragealle.php" method="get">
-    <input type="submit" name="add" value="add" />
-</form>
+
 <?php
 // Navigations Links nächste Seite etc.
-echo "<p><a href='./'>".'[Start]'."</a> ";
+
+// echo "<p><a href='./'>".'[Start]'."</a> ";
     // For Schleife für Seitendurchlauf
     for ($i = 1; $i <= $total_pages; $i++) {
     echo "<a href='?page=".$i."'>Seite ".$i."</a> ";
@@ -118,7 +150,7 @@ echo "<p><a href='./'>".'[Start]'."</a> ";
 
 echo '</div>';
 ?>
-<!-- <input type="button" id="C2" value="test" onclick="<?php $seite=$seite+4;?>" /> -->
+<?php $seite=$seite+4;?>
 <?php //echo $seite;
 echo $_SESSION['capnum'];
 ?>
