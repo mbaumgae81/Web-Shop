@@ -1,6 +1,7 @@
-
 <?PHP
 include("adminheader.php");
+// Startseite des Administrations Panel
+// Leere Seite aber alle Links zur Navigation bevinden sich im adminheader
 ?>
 
 <body>

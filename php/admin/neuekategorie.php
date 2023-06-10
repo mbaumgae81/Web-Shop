@@ -4,9 +4,9 @@ include("adminheader.php");
 ?>
 
 <body>
-Dies ist der Administrations Bereich.
+<h1>Erstellen einer neuen Kategorie</h1>
 
-<form action="newcat.php" method="post" >
+<form action="func_newcat.php" method="post" >
 <table >
     <tr>
         <td>Bezeichnung der neuen Kategorie</td>
