@@ -23,7 +23,7 @@ if (isset($_SESSION["user"])) {
            $nachName = $_POST["nachname"];
            $adresse = $_POST["adresse"];
            $telefon = $_POST["telefon"];
-           $loginName = $POST["loginname"];
+           $loginName = $_POST["loginname"];
            $email = $_POST["email"];
            $password = $_POST["password"];
            $passwordRepeat = $_POST["repeat_password"];
@@ -32,13 +32,13 @@ if (isset($_SESSION["user"])) {
 
            $errors = array();
            
-           if (empty($fullName) OR empty($email) OR empty($password) OR empty($passwordRepeat)) {
+           if (empty($vorName) OR empty($email) OR empty($password) OR empty($passwordRepeat)) {
             array_push($errors,"All fields are required");
            }
            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             array_push($errors, "Email is not valid");
            }
-           if (strlen($password)<8) {
+           if (strlen($password)<6) {
             array_push($errors,"Password must be at least 8 charactes long");
            }
            if ($password!==$passwordRepeat) {
@@ -48,9 +48,17 @@ if (isset($_SESSION["user"])) {
           include("../php/admin/util.inc.php");
           $conn = new_db_connect();
 
-           $sql = "SELECT * FROM users WHERE email = '$email'";
-           $result = mysqli_query($conn, $sql);
-           $rowCount = mysqli_num_rows($result);
+           $sql = "SELECT * FROM user WHERE EmailAdresse = '$email'";
+           $stmt = $conn->prepare($sql);                                                       // Prepared Statement
+                // Prepared Statement
+           
+           $stmt->execute();
+           $result = $stmt->get_result();
+          
+          //  $result = mysqli_query($conn, $sql);
+          $rowCount = mysqli_num_rows($result);
+          
+          
            if ($rowCount>0) {
             array_push($errors,"Email already exists!");
            }
@@ -60,7 +68,7 @@ if (isset($_SESSION["user"])) {
             }
            }else{
             
-            $sql = "INSERT INTO users (VorName, NachName, Adresse, Telefon, EmailAdresse, LoginName, PasswortHash) VALUES ( ?, ?, ?, ?, ?, ?, ? )";
+            $sql = "INSERT INTO user (VorName, NachName, Adresse, Telefon, EmailAdresse, LoginName, PasswortHash) VALUES ( ?, ?, ?, ?, ?, ?, ? )";
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {
@@ -77,25 +85,25 @@ if (isset($_SESSION["user"])) {
         ?>
         <form action="registration.php" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" name="name" placeholder="Vorname:">
+                <input type="text" class="form-control" name="vorname" placeholder="Vorname:" required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="lastnema" placeholder="Nachname:">
+                <input type="text" class="form-control" name="nachname" placeholder="Nachname:" required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="adresse" placeholder="Adresse:">
+                <input type="text" class="form-control" name="adresse" placeholder="Adresse: " required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="telfon" placeholder="Telefon:">
+                <input type="text" class="form-control" name="telefon" placeholder="Telefon:" required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="login_name" placeholder="Login Name:">
+                <input type="text" class="form-control" name="loginname" placeholder="Login Name:" required>
             </div>
             <div class="form-group">
-                <input type="emamil" class="form-control" name="email" placeholder="Email:">
+                <input type="emamil" class="form-control" name="email" placeholder="Email:" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password:">
+                <input type="password" class="form-control" name="password" placeholder="Password:" required>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="repeat_password" placeholder="Repeat Password:">
