@@ -4,10 +4,10 @@ require("config.php");
 function new_db_connect()
 {
 
+    $host = "localhost";        // IP Adresse oder domainname
     $user = "shop";            //  SQL benutzer
-    $pass = 'shop';         //  User Passwort
+    $pass = '7_C@U!D7en(guxK3';         //  User Passwort
     $database = "webshop";      // name der Datenbank
-    $host = "127.0.0.1";
     $connID = new mysqli($host, $user, $pass, $database);
 
     return $connID;
@@ -39,6 +39,9 @@ function getKategorien()
 }
 
 function getItemnr($durchlauf){
+    // Zur ertellung des Grid in einer While schleife
+    // Jeden durchlauf wird diese Funktion aufgerufen
+    // und gibt ihm den namen des aktuellen Values für das grid zurück
     $item0 ="item-3";
     $item1 ="item-4";
     $item2 ="item-5";

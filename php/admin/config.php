@@ -3,6 +3,6 @@
 // 
 $host = "localhost";        // IP Adresse oder domainname
 $user = "shop";            //  SQL benutzer
-$pass = 'shop';         //  User Passwort
+$pass = '7_C@U!D7en(guxK3';         //  User Passwort
 $database = "webshop";      // name der Datenbank
 ?>
