@@ -119,9 +119,6 @@ if (!$result) {
     // Ergebnisse gesamt durch Ergebnisse pro Seite teilen
     $total_pages = ceil($total_records / $res_per_page);
     $conn->close();
-    ?>
-
-    <?php
     for ($i = 1; $i <= $total_pages; $i++) {
         echo "<a href='?page=" . $i . "'>Seite " . $i . "</a> ";
     }

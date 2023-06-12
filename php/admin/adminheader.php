@@ -18,12 +18,12 @@
         <li>
             <a href="abfragealle.php">Artikel anzeigen / Löschen </a>
         </li>
-        <li>
-            <a href="../../index.html">Zum Shop</a>
-        </li>
+
         <li>
             <a href="neuekategorie.php" >Kategorien erstellen</a>
         </li>
-
+        <li>
+            <a href="../../index.html">Zum Shop</a>
+        </li>
     </ul>
 </header>
