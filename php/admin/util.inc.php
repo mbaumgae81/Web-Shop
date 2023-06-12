@@ -20,8 +20,9 @@ function checkLogin($userCHK, $passwordCHK)
 }
 
 function passwordHash($eingabe)
-{
-    $hash = "asd";
+{   
+    //echo $eingabe;
+    $hash = crypt($eingabe,'$6$rounds=5000$usesomesillystringforsalt$');
     return $hash;
 }
 
