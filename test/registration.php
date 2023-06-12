@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../php/admin/util.inc.php");
 if (isset($_SESSION["user"])) {
    header("Location: index.php");
 }
@@ -28,7 +29,7 @@ if (isset($_SESSION["user"])) {
            $password = $_POST["password"];
            $passwordRepeat = $_POST["repeat_password"];
            
-           $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+           $passwordHash = passwordHash($password);
 
            $errors = array();
            
@@ -45,11 +46,12 @@ if (isset($_SESSION["user"])) {
             array_push($errors,"Password does not match");
            }
           //require_once "database.php";
-          include("../php/admin/util.inc.php");
+          
           $conn = new_db_connect();
 
-           $sql = "SELECT * FROM user WHERE EmailAdresse = '$email'";
+           $sql = "SELECT * FROM user WHERE EmailAdresse = '$email'or LoginName = '$loginName'";
            $stmt = $conn->prepare($sql);                                                       // Prepared Statement
+
                 // Prepared Statement
            
            $stmt->execute();
@@ -60,7 +62,7 @@ if (isset($_SESSION["user"])) {
           
           
            if ($rowCount>0) {
-            array_push($errors,"Email already exists!");
+            array_push($errors,"Email oder Loginname existiert bereits!");
            }
            if (count($errors)>0) {
             foreach ($errors as  $error) {
@@ -72,7 +74,7 @@ if (isset($_SESSION["user"])) {
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt,"sssssss",$vorName, $nachName, $adresse, $telefon, $loginName, $email, $password);
+                mysqli_stmt_bind_param($stmt,"sssssss",$vorName, $nachName, $adresse, $telefon, $email, $loginName,  $passwordHash);
                 mysqli_stmt_execute($stmt);
                 echo "<div class='alert alert-success'>You are registered successfully.</div>";
             }else{
