@@ -37,4 +37,20 @@ function getKategorien()
     return $results;
 }
 
+function getItemnr($durchlauf){
+    $item0 ="item-3";
+    $item1 ="item-4";
+    $item2 ="item-5";
+    $item3 ="item-6";
+    if ($durchlauf == 0){
+        return $item0;
+    } elseif ( $durchlauf ==1){
+        return $item1;
+    } elseif ($durchlauf == 2){
+        return $item2;
+    }elseif ($durchlauf == 3){
+        return $item3;
+    }
+}
+
 ?>

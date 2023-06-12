@@ -23,7 +23,7 @@
             <a href="neuekategorie.php" >Kategorien erstellen</a>
         </li>
         <li>
-            <a href="../../index.html">Zum Shop</a>
+            <a href="../../index.php">Zum Shop</a>
         </li>
     </ul>
 </header>
