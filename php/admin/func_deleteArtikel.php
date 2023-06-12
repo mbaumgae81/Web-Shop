@@ -16,5 +16,5 @@ if (isset($_POST['zeile'])) {
 } else {
     echo "Nichts übergeben";
 }
-// header('location: abfragealle.php');
+header('location: abfragealle.php');
 ?>
