@@ -21,10 +21,7 @@ if (isset($_SESSION['user'])) {
 
 if ($loggedin) {
 
-    if ($_SESSION['isadmin'] == 1) {
-        $isadmin = TRUE;
-    }
-
+    $isadmin = $_SESSION['isadmin'];
 }
 
 $page = '';
@@ -69,10 +66,10 @@ $start_from = ($page - 1) * $res_per_page;
                 }
                 ?>
             </li>
-            <?PHP if($isadmin){ // prüfe ob admin und zeige adminpanel
+            <?PHP if ($isadmin) { // prüfe ob admin und zeige adminpanel
                 echo '<li><a href="/php/admin/adminpanel.php">AdminPanel</a></li> ';
-                }
-                ?>
+            }
+            ?>
 
         </nav>
     </div>

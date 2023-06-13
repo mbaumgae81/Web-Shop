@@ -2,6 +2,9 @@
 // TODO mit mehreren abfragen testen !! derzeit zu wenige einträge .
 
 session_start();
+if (!checkForAdmin()) {
+    die(' Du kommst hier nicht rein !');
+}
 // GET Variable
 $page = '';
 

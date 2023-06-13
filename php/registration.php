@@ -13,7 +13,7 @@ if (isset($_SESSION["user"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <div class="container">
@@ -49,7 +49,7 @@ if (isset($_SESSION["user"])) {
           
           $conn = new_db_connect();
 
-           $sql = "SELECT * FROM user WHERE EmailAdresse = '$email'or LoginName = '$loginName'";
+           $sql = "SELECT * FROM User WHERE EmailAdresse = '$email'or LoginName = '$loginName'";
            $stmt = $conn->prepare($sql);                                                       // Prepared Statement
 
                 // Prepared Statement
@@ -70,7 +70,7 @@ if (isset($_SESSION["user"])) {
             }
            }else{
             
-            $sql = "INSERT INTO user (VorName, NachName, Adresse, Telefon, EmailAdresse, LoginName, PasswortHash) VALUES ( ?, ?, ?, ?, ?, ?, ? )";
+            $sql = "INSERT INTO User (VorName, NachName, Adresse, Telefon, EmailAdresse, LoginName, PasswortHash) VALUES ( ?, ?, ?, ?, ?, ?, ? )";
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {

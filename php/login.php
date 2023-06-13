@@ -34,10 +34,15 @@ if (isset($_SESSION["user"])) {
         $r = $result->fetch_array();
         $rowCount = mysqli_num_rows($result);
 
+
         if ($rowCount > 0) {
             $_SESSION["user"] = "yes";                  // Daten zum user werden in der Session Gespeichert
             $_SESSION["username]"] = $login;
-            $_SESSION['isadmin'] = $r['istAdmin'];
+            if ($r['istAdmin'] == 1) {
+                $_SESSION['isadmin'] = TRUE;
+            } else {
+                $_SESSION['isadmin'] = FALSE;
+            }
             $_SESSION['userID'] = $r['userID'];
             header("Location: ../index.php");
             die();
