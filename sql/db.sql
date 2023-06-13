@@ -56,6 +56,6 @@ CREATE TABLE webshop.BestellungenPos
     FOREIGN KEY (artikelID) REFERENCES Artikel (artikelID)
 );
 -- Der Shop user wird mit vollen rechten für die Webshop Database erstellt
-CREATE USER 'shop'@'localhost' IDENTIFIED by '7_C@U!D7en(guxK3'; -- voreingestelltes Passwort auch in der config.php eingestellt
+CREATE USER 'shop'@'localhost' IDENTIFIED by '7_C@U!D7en(guxK3';
 GRANT USAGE ON *.* TO 'shop'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT ALL PRIVILEGES ON `webshop`.* TO 'shop'@'localhost';
