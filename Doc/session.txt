@@ -1,0 +1,4 @@
+ $_SESSION["user"] = "yes";                  // Daten zum user werden in der Session Gespeichert
+            $_SESSION["username]"] = $login;
+            $_SESSION['isadmin'] = $result['istAdmin'];
+            $_SESSION['userID'] = $result['userID'];

@@ -1,6 +1,32 @@
 <?PHP
-
+session_start();
 include("php/admin/util.inc.php");
+include("php/cart.php");
+$loggedin = FALSE;      // Standartmässig FALSE bis Prüfung auf TRUE
+$isadmin = FALSE;
+// Checke auf existierende Session
+if (!isset($_SESSION['again'])) {
+    // Es existiert keine Sesssion
+    $_SESSION['again'] = true;
+    // Warenkorb erstellen
+    $_SESSION['cart'] = new cart;
+    $myCart = $_SESSION['cart'];
+    //--------------------------------
+}
+if (isset($_SESSION['user'])) {
+    if ($_SESSION["user"] == "yes") {
+        $loggedin = TRUE;
+    }
+}
+
+if ($loggedin) {
+
+    if ($_SESSION['isadmin'] == 1) {
+        $isadmin = TRUE;
+    }
+
+}
+
 $page = '';
 
 // Pfüft die GET Variable, ob gesetzt und vom Typ integer
@@ -35,8 +61,19 @@ $start_from = ($page - 1) * $res_per_page;
             <li><a href="">Aktuelle Angebote </a></li>
             <li><a href="/php/search.php">Suche</a></li>
             <li><a href="/php/cart.php">Warenkorb</a></li>
-            <li><a href="/php/login.php">Login</a></li>
-            <li><a href="/php/admin/adminpanel.php">AdminPanel</a></li>
+            <li><?PHP
+                if (!$loggedin) {   // prüfe Logged in und Wechsle MenüPunkt
+                    echo '<a href="../php/login.php">Login</a>';
+                } else {
+                    echo '<a href="../php/logout.php">Logout</a>';
+                }
+                ?>
+            </li>
+            <?PHP if($isadmin){ // prüfe ob admin und zeige adminpanel
+                echo '<li><a href="/php/admin/adminpanel.php">AdminPanel</a></li> ';
+                }
+                ?>
+
         </nav>
     </div>
 
@@ -52,19 +89,18 @@ $start_from = ($page - 1) * $res_per_page;
     <!-- Contet -->
     <!-- php part mit while zum auslesen der Daten aus der SB -->
     <?PHP
-    $conn = new_db_connect();
 
+    $conn = new_db_connect();
     $sql = "SELECT * FROM Artikel limit ?,?";                                           // Prepared Statement
     $stmt = $conn->prepare($sql);                                                       // Prepared Statement
     $stmt->bind_param("dd", $start_from, $res_per_page);               // Prepared Statement
-
     $stmt->execute();
     $result = $stmt->get_result();
-
 
     if (!$result) {
         die('Could not query:' . $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
     }
+
     $durchlauf = 0;
     while ($row = $result->fetch_array()) {
 //            echo $durchlauf;
@@ -102,7 +138,7 @@ $start_from = ($page - 1) * $res_per_page;
                     </td>
                     <td>
                         <?PHP echo($row['preis'] . "€"); ?>
-                        <a href="" ><img heigt="30em" width="30em" src="img/shopping-cart_full.png"</a>
+                        <a href=""><img heigt="30em" width="30em" src="img/shopping-cart_full.png"</a>
                     </td>
                 </tr>
 

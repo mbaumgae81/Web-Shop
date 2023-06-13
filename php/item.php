@@ -1,4 +1,6 @@
 <?php
+// Diese Klasse wird als Sammel Object für den Warenkorb verwendet und beinhaltet
+// ID welche aus der SQL DB gezogen wird
     class item{
         public $id;
         public $menge;
