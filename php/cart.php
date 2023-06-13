@@ -1,5 +1,5 @@
 <?php
-    include ("cartart.php");
+    include ("item.php");
 
     class cart {
         private $cart = array();
@@ -9,10 +9,14 @@
             // Füge object dem Array hinzu
             $item = new item($id, $menge); 
             $itemId = $item->getId();
-            echo $itemId;
+            
 
             array_push($this->cart, $item);
 
+        }
+
+        function getCart(){
+            return $this->cart;
         }
         
     }
