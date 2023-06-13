@@ -6,7 +6,7 @@ include("adminheader.php");
 
 <body>
 Dies ist der Administrations Bereich.
-
+hallo
 
 </body>
 </html>
