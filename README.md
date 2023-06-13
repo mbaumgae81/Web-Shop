@@ -1,13 +1,14 @@
 # Web-Shop
 Installations anleitung
 Ordner 
-
+<code>
 / httpDocsRoot
 |--css
 |--install
 |--img
 |--php
 |--sql
+</code>
 
 Auf den Webserver Kopieren
 
