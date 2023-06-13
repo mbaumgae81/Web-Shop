@@ -17,7 +17,7 @@
 
         function getCart(){
             return $this->cart;
+            
         }
-        
     }
 ?>

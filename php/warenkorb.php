@@ -1,15 +1,15 @@
 <?php
-    include ("util.inc.php");
+    include ("../php/admin/util.inc.php");
     include ("cart.php");
     $conn = new_db_connect();
     
     $myCart = new cart;
     $myCart->addToCart(1,1);
-    $myCart->addToCart(1,2);
-    $myCart->addToCart(2,1);
-    $myCart->addToCart(3,2);
-?>
+    $myCart->addToCart(2,2);
+ 
     // Zeige artikel des Warenkorbs an
+?> 
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -45,10 +45,15 @@
                 <?PHP echo $row['name']; ?>
             </td>
             <td>
-                
+                <?PHP echo $row['preis']; ?> 
             </td>
-            <td> </td>
-            <td> </td>
+            <td>
+                <?PHP echo $i->getMenge(); ?>  
+            </td>
+
+            <td>
+                <?PHP echo $row['preis'] * $i->getMenge(); ?> 
+            </td>
     </tr>
      <td>
         
@@ -67,13 +72,6 @@
 
 <?php
 
-    foreach ($myCart->getCart() as $i) {
-        echo $i->getID();
-        echo $i->getMenge()."<br>";
-
-
-
-
-    }
+   
 
 ?>
