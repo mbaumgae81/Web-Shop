@@ -24,4 +24,4 @@ Zusätzlich wird auch gleich ein Admin user erstellt. Dieser ist für die verwal
 - editieren von Artikeln
 - löschen von artikeln
 
-Nach der installation sollte der Ornder ./install gelöscht werden.
+Nach der installation sollte der Ordner ./install gelöscht werden.
