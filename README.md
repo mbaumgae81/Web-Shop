@@ -25,3 +25,7 @@ Zusätzlich wird auch gleich ein Admin user erstellt. Dieser ist für die verwal
 - löschen von artikeln
 
 Nach der installation sollte der Ordner ./install gelöscht werden.
+
+![image](https://github.com/mbaumgae81/Web-Shop/assets/7016905/1752dc69-435d-4903-a7d4-866852ee7f1e)
+Beispielbild ohne Beispiel Artikel.
+
