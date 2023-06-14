@@ -8,20 +8,25 @@ session_start();
     if (isset($_SESSION['cart'])){
         $myCart =  unserialize($_SESSION['cart']);
     }
-    $myCart = $_SESSION['cart'];
-//$myCart = new cart();
-//$_SESSION['cart'] = serialize($myCart);
-//echo " --";
-$myCart = unserialize( $_SESSION['cart']);
- //$myCart->addToCart(1,1);
-//    $myCart->addToCart(2,2);
-//
+
+    if (isset($_GET['deleteitem'])){
+        $iddel = $_GET['deleteitem'];
+        $myCart->delFromCart($iddel);
+        $_SESSION['cart'] = serialize($myCart);
+        header("Location: warenkorb.php");
+    }
+
+//    $myCart = $_SESSION['cart'];
+///
+//$myCart = unserialize( $_SESSION['cart']);
+
     // Zeige artikel des Warenkorbs an
 ?> 
 
 <!DOCTYPE html>
 <html lang="de">
 <head>
+    <link rel="stylesheet" href="../css/warenkorb.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -30,15 +35,17 @@ $myCart = unserialize( $_SESSION['cart']);
     
 <table>
 <tr>
-    <td>Artikel</td>
-    <td>Preis einzeln</td>
-    <td>Menge</td>
-    <td>Preis Gesamt</td>
+    <th>Artikel</th>
+    <th>Preis einzeln</th>
+    <th>Menge</th>
+    <th>Preis Gesamt</th>
+    <th>löschen</th>
+    <th>KEY</th>
 
 </tr>
-<?php 
-
-    foreach($myCart->getCart() as $i){
+<?php
+        $akteintrag =0;  // zum zählen der Array Position
+    foreach($myCart->getCart() as $key=>$i){
         $artID= $i->getId();
 
         $sql = "Select * FROM Artikel where artikelID = ? ";
@@ -47,6 +54,7 @@ $myCart = unserialize( $_SESSION['cart']);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_array();
+
 ?>
 
         <tr>
@@ -57,17 +65,27 @@ $myCart = unserialize( $_SESSION['cart']);
                 <?PHP echo $row['preis']; ?> 
             </td>
             <td>
-                <?PHP echo $i->getMenge(); ?>  
+                <input type="number" value="<?PHP echo $i->getMenge(); ?>" name="<?PHP echo $key?>" >
+
             </td>
 
             <td>
                 <?PHP echo $row['preis'] * $i->getMenge(); ?> 
             </td>
+            <td><a href="?deleteitem=<?php echo $key; ?>" >
+                <img heigt="30em" width="30em"
+                     src="../img/remove.png"></a>
+            </td>
+            <td>
+                <?PHP echo $key; ?>
+            </td>
     </tr>
      <td>
-        
-     
+
+
+
      <?php
+     $akteintrag++;
     }
 ?>
 
