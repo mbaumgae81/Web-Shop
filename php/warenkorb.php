@@ -15,6 +15,11 @@ session_start();
         $_SESSION['cart'] = serialize($myCart);
         header("Location: warenkorb.php");
     }
+    if (isset($_GET['Aktualisieren'])){
+        foreach ($myCart->getCart() as $key=>$i) {
+         $i->setMenge($_GET[$key]);
+        }
+    }
 
 //    $myCart = $_SESSION['cart'];
 ///
@@ -56,7 +61,7 @@ session_start();
         $row = $result->fetch_array();
 
 ?>
-
+    <form>
         <tr>
             <td>
                 <?PHP echo $row['name']; ?>
@@ -79,6 +84,8 @@ session_start();
             <td>
                 <?PHP echo $key; ?>
             </td>
+
+
     </tr>
      <td>
 
@@ -88,7 +95,8 @@ session_start();
      $akteintrag++;
     }
 ?>
-
+         <input type="submit" value="Aktualisieren" name="Aktualisieren">
+    </form>
 </table>
 
 
