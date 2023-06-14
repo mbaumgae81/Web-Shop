@@ -1,16 +1,46 @@
 <?PHP
-
 include("php/admin/util.inc.php");
-$page = '';
+include("php/cart.php");
+session_start();
 
-// Pfüft die GET Variable, ob gesetzt und vom Typ integer
+$loggedin = FALSE;      // Standartmässig FALSE bis Prüfung auf TRUE
+$isadmin = FALSE;       // Standartmässig FALSE bis Prüfung auf TRUE
+$page = '';
+$res_per_page = 4;  // Ergebnisse pro Seite ( LIMIT SQL)
+// prüfe ob Cart schon existiert
+// falls nicht erzeuge neue instanz CART
+if (isset($_SESSION['cart'])) {
+    $myCart = unserialize($_SESSION['cart']);
+} else {
+    $myCart = new cart();
+    $_SESSION['cart'] = serialize($myCart);
+}
+// Read user und setze bool
+if (isset($_SESSION['user'])) { // Wenn eingelogt dann Bool TRUE
+    if ($_SESSION["user"] == "yes") {
+        $loggedin = TRUE;
+    }
+}
+// Prüfe ob admin
+if ($loggedin) {
+
+    $isadmin = $_SESSION['isadmin'];
+}
+
+// Pfüft die ob Seitenzahl übergeben wurde
 if (isset($_GET['page']) && ctype_digit(strval($_GET['page']))) {
     $page = $_GET['page'];
 } else {
     $page = 1;
 }
-// Ergebnisse pro Seite
-$res_per_page = 4;
+// Prüft ob Knopf gedrückt wurde
+if (isset($_GET['addcart'])) { // Weiterer eintrag in den Warenkorb
+    $addID = $_GET['addcart'];
+    $menge = 1; // Standart immer 1 bei press on cart
+    $myCart->addToCart($addID, $menge);
+    $_SESSION['cart'] = serialize($myCart);
+}
+
 $start_from = ($page - 1) * $res_per_page;
 
 ?>
@@ -20,7 +50,7 @@ $start_from = ($page - 1) * $res_per_page;
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="css/index.css">
-    <title>Sitzathlet</title>
+    <title>Sitzathlet Webshop</title>
 </head>
 <body>
 
@@ -34,13 +64,24 @@ $start_from = ($page - 1) * $res_per_page;
 
             <li><a href="">Aktuelle Angebote </a></li>
             <li><a href="/php/search.php">Suche</a></li>
-            <li><a href="/php/cart.php">Warenkorb</a></li>
-            <li><a href="/php/login.php">Login</a></li>
-            <li><a href="/php/admin/adminpanel.php">AdminPanel</a></li>
+            <li><a href="/php/warenkorb.php">Warenkorb</a></li>
+            <li><?PHP
+                if (!$loggedin) {   // prüfe Logged in und Wechsle MenüPunkt
+                    echo '<a href="../php/login.php">Login</a>';
+                } else {
+                    echo '<a href="../php/logout.php">Logout</a>';
+                }
+                ?>
+            </li>
+            <?PHP if ($isadmin) { // prüfe ob admin und zeige adminpanel
+                echo '<li><a href="/php/admin/adminpanel.php">AdminPanel</a></li> ';
+            }
+            ?>
+
         </nav>
     </div>
 
-    <!-- Menu -->
+    <!-- Menu deaktiviert
     <div class="sidebar">
         <h2>Menu</h2>
         <ol>Auswahl 1</ol>
@@ -48,29 +89,18 @@ $start_from = ($page - 1) * $res_per_page;
         <ol>Auswahl 3</ol>
         <ol>Auswahl 4</ol>
     </div>
-
+-->
     <!-- Contet -->
     <!-- php part mit while zum auslesen der Daten aus der SB -->
     <?PHP
-    $conn = new_db_connect();
 
-    $sql = "SELECT * FROM Artikel limit ?,?";                                           // Prepared Statement
-    $stmt = $conn->prepare($sql);                                                       // Prepared Statement
-    $stmt->bind_param("dd", $start_from, $res_per_page);               // Prepared Statement
+   //
+    $sql = "SELECT * FROM Artikel limit ?,?";
+    $result = getArtikelwith($sql, $start_from, $res_per_page);
 
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-
-    if (!$result) {
-        die('Could not query:' . $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
-    }
-    $durchlauf = 0;
+    $durchlauf = 0; // durchlauf counter für while schleife ( helper) aufbau GRID
     while ($row = $result->fetch_array()) {
-//            echo $durchlauf;
         ?>
-
-
         <div class="artikel" id="<?php echo getItemnr($durchlauf); ?>">
             <table>
                 <tr> <!-- Zeile 1 -->
@@ -102,7 +132,8 @@ $start_from = ($page - 1) * $res_per_page;
                     </td>
                     <td>
                         <?PHP echo($row['preis'] . "€"); ?>
-                        <a href="" ><img heigt="30em" width="30em" src="img/shopping-cart_full.png"</a>
+                        <a href="?addcart=<?PHP echo $row['artikelID'] ?>"><img heigt="30em" width="30em"
+                                                                                src="img/shopping-cart_full.png"</a>
                     </td>
                 </tr>
 
@@ -120,13 +151,16 @@ $start_from = ($page - 1) * $res_per_page;
     <div class="item-7">
         <?PHP
         // SQL Abfrage für menge
-        $db = "select * from Artikel";
-        $result = $conn->query($db);
-        // Anzahl der Ergebnisse aus SQL Abfrage
-        $total_records = $result->num_rows;
-        // Ergebnisse gesamt durch Ergebnisse pro Seite teilen
-        $total_pages = ceil($total_records / $res_per_page);
-        $conn->close();
+        $alleartikel = "select * from Artikel";
+        $total_pages = getAnzahlergebnisse($alleartikel, $res_per_page);
+        echo $total_pages;
+        //$result = $conn->query($db, $res_per_page);
+//        // Anzahl der Ergebnisse aus SQL Abfrage
+//        $total_records = $result->num_rows;
+//        // Ergebnisse gesamt durch Ergebnisse pro Seite teilen
+//        $total_pages = ceil($total_records / $res_per_page);
+//        $conn->close();
+
         for ($i = 1; $i <= $total_pages; $i++) {
             echo "<a href='?page=" . $i . "'>Seite " . $i . "</a> ";
         }
@@ -135,7 +169,6 @@ $start_from = ($page - 1) * $res_per_page;
 
         echo '</div>';
         ?>
-        <?php // $seite = $seite + 4; ?>
 
     </div>
 

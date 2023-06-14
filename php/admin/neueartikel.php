@@ -36,7 +36,9 @@ include("util.inc.php");
                 <select name="kategorie" required>
                     <?PHP
                     $results = getKategorien();
-                    while ($r = $results->fetch_array()) { ?>
+                    while ($r = $results->fetch_array()) {
+                        echo $r['kategorieID'];
+                        ?>
                         <option value="<?php echo $r['kategorieID']; ?>">  <?php echo $r['bezeichnung']; ?></option>
                         <?PHP
                     }

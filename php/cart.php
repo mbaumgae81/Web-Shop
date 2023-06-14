@@ -8,7 +8,7 @@
 
             // Füge object dem Array hinzu
             $item = new item($id, $menge); 
-            $itemId = $item->getId();
+            //$itemId = $item->getId();
             
 
             array_push($this->cart, $item);
@@ -17,7 +17,7 @@
 
         function getCart(){
             return $this->cart;
+            
         }
-        
     }
 ?>

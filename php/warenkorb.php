@@ -1,15 +1,24 @@
 <?php
-    include ("util.inc.php");
-    include ("cart.php");
+include ("../php/admin/util.inc.php");
+include ("cart.php");
+session_start();
+
     $conn = new_db_connect();
-    
-    $myCart = new cart;
-    $myCart->addToCart(1,1);
-    $myCart->addToCart(1,2);
-    $myCart->addToCart(2,1);
-    $myCart->addToCart(3,2);
-?>
+
+    if (isset($_SESSION['cart'])){
+        $myCart =  unserialize($_SESSION['cart']);
+    }
+    $myCart = $_SESSION['cart'];
+//$myCart = new cart();
+//$_SESSION['cart'] = serialize($myCart);
+//echo " --";
+$myCart = unserialize( $_SESSION['cart']);
+ //$myCart->addToCart(1,1);
+//    $myCart->addToCart(2,2);
+//
     // Zeige artikel des Warenkorbs an
+?> 
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -32,7 +41,7 @@
     foreach($myCart->getCart() as $i){
         $artID= $i->getId();
 
-        $sql = "Select * FROM artikel where artikelID = ? ";
+        $sql = "Select * FROM Artikel where artikelID = ? ";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i",$artID);
         $stmt->execute();
@@ -45,10 +54,15 @@
                 <?PHP echo $row['name']; ?>
             </td>
             <td>
-                
+                <?PHP echo $row['preis']; ?> 
             </td>
-            <td> </td>
-            <td> </td>
+            <td>
+                <?PHP echo $i->getMenge(); ?>  
+            </td>
+
+            <td>
+                <?PHP echo $row['preis'] * $i->getMenge(); ?> 
+            </td>
     </tr>
      <td>
         
@@ -67,13 +81,6 @@
 
 <?php
 
-    foreach ($myCart->getCart() as $i) {
-        echo $i->getID();
-        echo $i->getMenge()."<br>";
-
-
-
-
-    }
+   
 
 ?>

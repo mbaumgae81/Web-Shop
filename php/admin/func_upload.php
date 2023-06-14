@@ -20,7 +20,7 @@ if (!empty($_FILES['image'])) {
             $beschreibung = $_POST['beschreibung'];
             $hersteller = $_POST['hersteller'];
             $verfuegbar = $_POST['verfuegbar'];
-            $kategoriea = $_POST['kategoriea'];
+            $kategoriea = $_POST['kategorie'];
             // Build Prepared Statement
             $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar, kategorieA) VALUES(?, ?,?,?,?,?,?,? )"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
