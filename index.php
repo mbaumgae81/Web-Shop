@@ -94,16 +94,9 @@ $start_from = ($page - 1) * $res_per_page;
     <!-- php part mit while zum auslesen der Daten aus der SB -->
     <?PHP
 
-    $conn = new_db_connect();
-    $sql = "SELECT * FROM Artikel limit ?,?";                                           // Prepared Statement
-    $stmt = $conn->prepare($sql);                                                       // Prepared Statement
-    $stmt->bind_param("dd", $start_from, $res_per_page);               // Prepared Statement
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if (!$result) {
-        die('Could not query:' . $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
-    }
+   //
+    $sql = "SELECT * FROM Artikel limit ?,?";
+    $result = getArtikelwith($sql, $start_from, $res_per_page);
 
     $durchlauf = 0; // durchlauf counter für while schleife ( helper) aufbau GRID
     while ($row = $result->fetch_array()) {
@@ -158,13 +151,16 @@ $start_from = ($page - 1) * $res_per_page;
     <div class="item-7">
         <?PHP
         // SQL Abfrage für menge
-        $db = "select * from Artikel";
-        $result = $conn->query($db);
-        // Anzahl der Ergebnisse aus SQL Abfrage
-        $total_records = $result->num_rows;
-        // Ergebnisse gesamt durch Ergebnisse pro Seite teilen
-        $total_pages = ceil($total_records / $res_per_page);
-        $conn->close();
+        $alleartikel = "select * from Artikel";
+        $total_pages = getAnzahlergebnisse($alleartikel, $res_per_page);
+        echo $total_pages;
+        //$result = $conn->query($db, $res_per_page);
+//        // Anzahl der Ergebnisse aus SQL Abfrage
+//        $total_records = $result->num_rows;
+//        // Ergebnisse gesamt durch Ergebnisse pro Seite teilen
+//        $total_pages = ceil($total_records / $res_per_page);
+//        $conn->close();
+
         for ($i = 1; $i <= $total_pages; $i++) {
             echo "<a href='?page=" . $i . "'>Seite " . $i . "</a> ";
         }
@@ -173,7 +169,6 @@ $start_from = ($page - 1) * $res_per_page;
 
         echo '</div>';
         ?>
-        <?php // $seite = $seite + 4; ?>
 
     </div>
 
