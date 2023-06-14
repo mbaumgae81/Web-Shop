@@ -1,13 +1,21 @@
 <?php
+include ("../php/admin/util.inc.php");
+include ("cart.php");
 session_start();
-    include ("../php/admin/util.inc.php");
-    include ("cart.php");
+
     $conn = new_db_connect();
-    
-    $myCart = new cart;
-    $myCart->addToCart(1,1);
-    $myCart->addToCart(2,2);
- 
+
+    if (isset($_SESSION['cart'])){
+        $myCart =  unserialize($_SESSION['cart']);
+    }
+    $myCart = $_SESSION['cart'];
+//$myCart = new cart();
+//$_SESSION['cart'] = serialize($myCart);
+//echo " --";
+$myCart = unserialize( $_SESSION['cart']);
+ //$myCart->addToCart(1,1);
+//    $myCart->addToCart(2,2);
+//
     // Zeige artikel des Warenkorbs an
 ?> 
 
