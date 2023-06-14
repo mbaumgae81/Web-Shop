@@ -1,4 +1,5 @@
 <?php
+session_start();
     include ("../php/admin/util.inc.php");
     include ("cart.php");
     $conn = new_db_connect();
@@ -32,7 +33,7 @@
     foreach($myCart->getCart() as $i){
         $artID= $i->getId();
 
-        $sql = "Select * FROM artikel where artikelID = ? ";
+        $sql = "Select * FROM Artikel where artikelID = ? ";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i",$artID);
         $stmt->execute();

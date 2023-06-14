@@ -1,11 +1,10 @@
 <?PHP
 
-function checkForAdmin()
-{
+function checkForAdmin(){
     // Prüfe ob der Angemeldete User auch admin ist
 
     if (isset($_SESSION['isadmin'])) {
-        if ($_SESSION['isadmin'])
+        if($_SESSION['isadmin'])
             return TRUE;
     } else {
         return FALSE;
@@ -31,9 +30,9 @@ function checkLogin($userCHK, $passwordCHK)
 }
 
 function passwordHash($eingabe)
-{
+{   
 
-    $hash = crypt($eingabe, '$6$rounds=5000$usesomesillystringforsalt$');
+    $hash = crypt($eingabe,'$6$rounds=5000$usesomesillystringforsalt$');
     return $hash;
 }
 
@@ -49,22 +48,21 @@ function getKategorien()
     return $results;
 }
 
-function getItemnr($durchlauf)
-{
+function getItemnr($durchlauf){
     // Zur ertellung des Grid in einer While schleife
     // Jeden durchlauf wird diese Funktion aufgerufen
     // und gibt ihm den namen des aktuellen Values für das grid zurück
-    $item0 = "item-3";
-    $item1 = "item-4";
-    $item2 = "item-5";
-    $item3 = "item-6";
-    if ($durchlauf == 0) {
+    $item0 ="item-3";
+    $item1 ="item-4";
+    $item2 ="item-5";
+    $item3 ="item-6";
+    if ($durchlauf == 0){
         return $item0;
-    } elseif ($durchlauf == 1) {
+    } elseif ( $durchlauf ==1){
         return $item1;
-    } elseif ($durchlauf == 2) {
+    } elseif ($durchlauf == 2){
         return $item2;
-    } elseif ($durchlauf == 3) {
+    }elseif ($durchlauf == 3){
         return $item3;
     }
 }

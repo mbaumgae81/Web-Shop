@@ -1,15 +1,13 @@
 <?php
 include("adminheader.php");
 include("util.inc.php");
-if (!checkForAdmin()) {
-    die(' Du kommst hier nicht rein !');
-}
+
 if (isset($_POST['zeile'])) {
     $conn = new_db_connect();
 
     $sql = "SELECT * FROM Artikel where artikelID = ?";                                           // Prepared Statement
     $stmt = $conn->prepare($sql);                                                       // Prepared Statement
-    $stmt->bind_param("i", $_POST['zeile']);               // Prepared Statement
+    $stmt->bind_param("i",  $_POST['zeile']);               // Prepared Statement
 
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,26 +25,23 @@ if (isset($_POST['zeile'])) {
         </tr>
         <tr>
             <td>Artikelnamen:</td>
-            <td><input type="text" name="artikelName" placeholder="Name des Artikels"
-                       value=" <?PHP echo($row['name']); ?>"></td>
+            <td><input type="text" name="artikelName" placeholder="Name des Artikels" value=" <?PHP echo  ($row['name']); ?>" ></td>
         </tr>
         <tr>
             <td>Beschreibung:</td>
-            <td><input type="text" name="beschreibung" placeholder="Beschreibnung"
-                       value=" <?PHP echo($row['beschreibung']); ?>"></td>
+            <td><input type="text" name="beschreibung" placeholder="Beschreibnung" value=" <?PHP echo  ($row['beschreibung']); ?>" ></td>
         </tr>
         <tr>
             <td>Preis:</td>
-            <td><input type="number" step="0.01" name="preis" value=" <?PHP echo($row['preis']); ?>"></td>
+            <td><input type="number" step="0.01" name="preis" value=" <?PHP echo  ($row['preis']); ?>"></td>
         </tr>
         <tr>
             <td>Hersteller:</td>
-            <td><input type="text" name="hersteller" placeholder="Hersteller" value=" <?PHP echo($row['preis']); ?>">
-            </td>
+            <td><input type="text" name="hersteller" placeholder="Hersteller" value=" <?PHP echo  ($row['preis']); ?>" ></td>
         </tr>
         <tr>
             <td>Ist verfügbar:</td>
-            <td><input type="checkbox" name="verfuegbar" value=" <?PHP echo($row['verfuegbar']); ?>"></td>
+            <td><input type="checkbox" name="verfuegbar" value=" <?PHP echo  ($row['verfuegbar']); ?>" ></td>
         </tr>
         <tr>
             <td>Kategorie</td>

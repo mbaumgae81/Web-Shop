@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) {
 }
 
 if ($loggedin) {
-
+    
     $isadmin = $_SESSION['isadmin'];
 }
 
@@ -57,7 +57,7 @@ $start_from = ($page - 1) * $res_per_page;
 
             <li><a href="">Aktuelle Angebote </a></li>
             <li><a href="/php/search.php">Suche</a></li>
-            <li><a href="/php/cart.php">Warenkorb</a></li>
+            <li><a href="/php/warenkorb.php">Warenkorb</a></li>
             <li><?PHP
                 if (!$loggedin) {   // prüfe Logged in und Wechsle MenüPunkt
                     echo '<a href="../php/login.php">Login</a>';
