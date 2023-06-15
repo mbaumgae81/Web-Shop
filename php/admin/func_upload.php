@@ -22,10 +22,11 @@ if (!empty($_FILES['image'])) {
             $hersteller = $_POST['hersteller'];
             $verfuegbar = $_POST['verfuegbar'];
             $kategoriea = $_POST['kategorie'];
+            $date = date("Y-m-d H:i:s");
             // Build Prepared Statement
-            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar, kategorieA) VALUES(?, ?,?,?,?,?,?,? )"; // @todo die restlichen einträge nachzihen.
+            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar, kategorieA, erstelldatum) VALUES(?, ?,?,?,?,?,?,? ,?)"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
-            $statement->bind_param('sssdssii', $imgType, $imgData, $name, $preis, $beschreibung, $hersteller, $verfuegbar, $kategoriea);
+            $statement->bind_param('sssdssiis', $imgType, $imgData, $name, $preis, $beschreibung, $hersteller, $verfuegbar, $kategoriea, $date);
             //i - integer
             //d - double
             //s - string

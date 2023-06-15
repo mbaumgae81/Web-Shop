@@ -12,8 +12,10 @@ $res_per_page = 4;  // Ergebnisse pro Seite ( LIMIT SQL)
 // falls nicht erzeuge neue instanz CART
 if (isset($_SESSION['cart'])) {
     $myCart = unserialize($_SESSION['cart']);
+    $itemsImKorb = $_SESSION['itemsImKorb'];
 } else {
     $myCart = new cart();
+    $_SESSION['itemsImKorb']=0;
     $_SESSION['cart'] = serialize($myCart);
 }
 // Read user und setze bool
@@ -39,6 +41,7 @@ if (isset($_GET['addcart'])) { // Weiterer eintrag in den Warenkorb
     $addID = $_GET['addcart'];
     $menge = 1; // Standart immer 1 bei press on cart
     $myCart->addToCart($addID, $menge);
+    $_SESSION['itemsImKorb']= $myCart->getAnzahlItems();
     $_SESSION['cart'] = serialize($myCart);
 }
 
@@ -65,7 +68,8 @@ $start_from = ($page - 1) * $res_per_page;
 
             <li><a href="">Aktuelle Angebote </a></li>
             <li><a href="/php/search.php">Suche</a></li>
-            <li><a href="/php/warenkorb.php">Warenkorb</a></li>
+            <li><a href="/php/warenkorb.php">Warenkorb</a><div class='itemcount'> <?PHP echo "(".$_SESSION['itemsImKorb'].")"; ?></div></li>
+<!--            <li><a href="/php/warenkorb.php">Warenkorb--><?PHP //echo "<div class='itemcount'>(".$_SESSION['itemsImKorb'].")</div>"; ?><!--</a></li>-->
             <li><?PHP
                 if (!$loggedin) {   // prüfe Logged in und Wechsle MenüPunkt
                     echo '<a href="../php/login.php">Login</a>';

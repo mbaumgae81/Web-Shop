@@ -33,6 +33,7 @@ CREATE TABLE webshop.Artikel
     kategorieA   int,
     kategorieB   int,
     kategorieC   int,
+    erstelldatum  date,
     FOREIGN KEY (kategorieA) REFERENCES Kategorie (kategorieID),
     FOREIGN KEY (kategorieB) REFERENCES Kategorie (kategorieID),
     FOREIGN KEY (kategorieC) REFERENCES Kategorie (kategorieID)

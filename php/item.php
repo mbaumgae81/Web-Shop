@@ -14,6 +14,9 @@
         function getMenge(){
             return $this->menge;
         }
+        function setMenge($menge){
+            $this->menge= $menge;
+        }
 
 
     }
