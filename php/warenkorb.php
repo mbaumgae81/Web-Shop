@@ -12,6 +12,8 @@ session_start();
     if (isset($_GET['deleteitem'])){
         $iddel = $_GET['deleteitem'];
         $myCart->delFromCart($iddel);
+        $_SESSION['itemsImKorb']= $myCart->getAnzahlItems();
+
         $_SESSION['cart'] = serialize($myCart);
         header("Location: warenkorb.php");
     }
@@ -19,6 +21,19 @@ session_start();
         foreach ($myCart->getCart() as $key=>$i) {
          $i->setMenge($_GET[$key]);
         }
+    } else if (isset($_GET['order'])){
+        // Bestellung  @TODO Funktion Testen Datensätze schreiben
+
+        // INSERT INTO `BestellungenPos`(`bestellungID`, `artikelID`, `anzahl`) VALUES ('[value-1]','[value-2]','[value-3]')
+        //INSERT INTO `Bestellungen`(`bestellungID`, `datum`, `const_userID`, `artikelID`, `userID`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]')
+        //
+
+        $sql ="";
+        $conn = new_db_connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("", );
+        $result = $stmt->execute();
+        $orderID = $conn->insert_id();
     }
 
 //    $myCart = $_SESSION['cart'];
@@ -45,10 +60,11 @@ session_start();
     <th>Menge</th>
     <th>Preis Gesamt</th>
     <th>löschen</th>
-    <th>KEY</th>
+<!--    <th>KEY</th>-->
 
 </tr>
 <?php
+        $Total =0;
         $akteintrag =0;  // zum zählen der Array Position
     foreach($myCart->getCart() as $key=>$i){
         $artID= $i->getId();
@@ -59,7 +75,8 @@ session_start();
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_array();
-
+        $rowGesPreis = $row['preis'] * $i->getMenge();
+        $Total += $rowGesPreis;
 ?>
     <form>
         <tr>
@@ -67,7 +84,7 @@ session_start();
                 <?PHP echo $row['name']; ?>
             </td>
             <td>
-                <?PHP echo $row['preis']; ?> 
+                <?PHP $ausgabe = sprintf("%01.2f", $row['preis']);echo $ausgabe."€"; ?>
             </td>
             <td>
                 <input type="number" value="<?PHP echo $i->getMenge(); ?>" name="<?PHP echo $key?>" >
@@ -75,15 +92,13 @@ session_start();
             </td>
 
             <td>
-                <?PHP echo $row['preis'] * $i->getMenge(); ?> 
+                <?PHP $ausgabe= sprintf("%01.2f", $rowGesPreis); echo $ausgabe."€"; ?>
             </td>
             <td><a href="?deleteitem=<?php echo $key; ?>" >
                 <img heigt="30em" width="30em"
                      src="../img/remove.png"></a>
             </td>
-            <td>
-                <?PHP echo $key; ?>
-            </td>
+
 
 
     </tr>
@@ -95,9 +110,10 @@ session_start();
      $akteintrag++;
     }
 ?>
-         <input type="submit" value="Aktualisieren" name="Aktualisieren">
-    </form>
 </table>
+         <input type="submit" value="Aktualisieren" name="Aktualisieren"> <p>Gesamt Preis Bestellung: <?PHP $ausgabe= sprintf("%01.2f",$Total); echo $ausgabe."€"; ?> </p>
+    </form>
+
 
 
 

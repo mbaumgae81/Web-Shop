@@ -3,6 +3,7 @@
 
     class cart {
         private $cart = array();
+        private $anzahlitems;
 
         function addToCart($id,$menge){
 
@@ -10,6 +11,7 @@
             $item = new item($id, $menge); 
             //$itemId = $item->getId();
             array_push($this->cart, $item);
+            $this->updateAnzahlItems();
 
         }
 
@@ -17,9 +19,17 @@
             return $this->cart;
             
         }
+        function updateAnzahlItems(){
+            $this->anzahlitems = count($this->cart);
+        }
 
         function delFromCart($id){
             unset($this->cart[$id]);
+            $this->updateAnzahlItems();
+        }
+        function getAnzahlItems(){
+            $this->updateAnzahlItems();
+            return $this->anzahlitems;
         }
     }
 ?>
