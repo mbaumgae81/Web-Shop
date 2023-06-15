@@ -31,8 +31,9 @@ include("util.inc.php");
             <td><input type="checkbox" name="verfuegbar" value="1" checked></td>
         </tr>
         <tr>
-        <td>Ist im Angebot:</td>S
-        <td><input type="checkbox" name="angebot" value="1" checked></td>
+            <td>Ist im Angebot:</td>
+            S
+            <td><input type="checkbox" name="angebot" value="1" checked></td>
         </tr>
         <tr>
             <td>Kategorie</td>

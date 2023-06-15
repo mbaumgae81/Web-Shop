@@ -1,7 +1,7 @@
 <?PHP
 session_start();
 
-include ("util.inc.php");
+include("util.inc.php");
 if (!checkForAdmin()) {
     die(' Du kommst hier nicht rein !');
 }
@@ -19,7 +19,7 @@ include("adminheader.php");
 
 <body>
 Dies ist der Administrations Bereich.
-hallo
+
 
 </body>
 </html>

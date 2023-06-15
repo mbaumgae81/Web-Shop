@@ -8,8 +8,8 @@ class cart
 
     function addToCart($id, $menge)
     {
-            $idExist = $this->checkForID($id);
-        if ($idExist){                                     // Prüfe ob schon ein Artikel mit derselben ID vorhanden ist
+        $idExist = $this->checkForID($id);
+        if ($idExist) {                                     // Prüfe ob schon ein Artikel mit derselben ID vorhanden ist
             $key = $this->searchKeyFromID($id);         // lese ID des Array eintrages
 
             $aktMenge = $this->cart[$key]->getMenge();   // wenn ja, hole mir von eben diesem artikel die menge aus dem cart
@@ -75,7 +75,6 @@ class cart
             }
         }
     }
-
 
 }
 

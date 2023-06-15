@@ -33,7 +33,7 @@ CREATE TABLE webshop.Artikel
     kategorieA   int,
     kategorieB   int,
     kategorieC   int,
-    erstelldatum  date,
+    erstelldatum date,
     angebot      tinyint,
     FOREIGN KEY (kategorieA) REFERENCES Kategorie (kategorieID),
     FOREIGN KEY (kategorieB) REFERENCES Kategorie (kategorieID),

@@ -6,7 +6,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (!empty($_POST['kategorie'])){
+if (!empty($_POST['kategorie'])) {
 
     $neueKategorie = $_POST['kategorie'];
 
@@ -14,7 +14,7 @@ if (!empty($_POST['kategorie'])){
     $sql = " INSERT INTO Kategorie(bezeichnung) VALUES(?) ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $neueKategorie);
-    $stmt->execute() ;
+    $stmt->execute();
 
 } else {
     echo " Fehler ";
