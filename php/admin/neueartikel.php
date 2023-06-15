@@ -8,7 +8,7 @@ include("util.inc.php");
     <table>
         <tr>
             <td> Datei auswählen:</td>
-            <td><input type="file" name="image" accept=".png,.jpg,.jpeg" required></td>
+            <td><input type="file" name="image" accept=".png,.jpg,.jpeg,.webp" required></td>
         </tr>
         <tr>
             <td>Artikelnamen:</td>

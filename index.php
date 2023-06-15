@@ -27,7 +27,7 @@ $start_from = ($page - 1) * $res_per_page;
 <div class="grid-container">
 
     <!-- Header -->
-    <div class="item-1">
+    <header class="item-1">
         <h1>Sitzathlet Web-Shop</h1>
         <nav class="navi">
             <!--      <li>Hallo</li>-->
@@ -38,7 +38,7 @@ $start_from = ($page - 1) * $res_per_page;
             <li><a href="/php/login.php">Login</a></li>
             <li><a href="/php/admin/adminpanel.php">AdminPanel</a></li>
         </nav>
-    </div>
+    </header>
 
     <!-- Menu -->
     <div class="sidebar">
