@@ -21,17 +21,24 @@ if (!empty($_FILES['image'])) {
             $hersteller = $_POST['hersteller'];
             $verfuegbar = $_POST['verfuegbar'];
             $kategoriea = $_POST['kategorie'];
+            if ($_POST['angebot'] == 1){
+                $angebot = 1;
+            } else {
+                $angebot =0;
+            }
+            $angebot = 1;
             $date = date("Y-m-d H:i:s");
             // Build Prepared Statement
-            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar, kategorieA, erstelldatum) VALUES(?, ?,?,?,?,?,?,? ,?)"; // @todo die restlichen einträge nachzihen.
+            $sql = "INSERT INTO Artikel(bildType ,bild,name,preis, beschreibung, hersteller,verfuegbar, kategorieA, erstelldatum, angebot) VALUES(?, ?,?,?,?,?,?,? ,?, ?)"; // @todo die restlichen einträge nachzihen.
             $statement = $conn->prepare($sql);
-            $statement->bind_param('sssdssiis', $imgType, $imgData, $name, $preis, $beschreibung, $hersteller, $verfuegbar, $kategoriea, $date);
+            $statement->bind_param('sssdssiisi', $imgType, $imgData, $name, $preis, $beschreibung, $hersteller, $verfuegbar, $kategoriea, $date ,$angebot);
             //i - integer
             //d - double
             //s - string
             //b - BLOB
             // execute PS
-            $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
+            $statement->execute();
+//            $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
         }
     }
 

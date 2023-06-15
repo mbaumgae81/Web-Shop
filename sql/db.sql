@@ -1,5 +1,5 @@
 -- Start Script zur initialisierung der Datenbank WebShop
--- V 0.2 -- Änderungen eingefügt
+-- V 0.2.1 -- Änderungen eingefügt artikel date und angebot zugefügt
 
 CREATE DATABASE webshop;
 use webshop;
@@ -34,6 +34,7 @@ CREATE TABLE webshop.Artikel
     kategorieB   int,
     kategorieC   int,
     erstelldatum  date,
+    angebot      tinyint,
     FOREIGN KEY (kategorieA) REFERENCES Kategorie (kategorieID),
     FOREIGN KEY (kategorieB) REFERENCES Kategorie (kategorieID),
     FOREIGN KEY (kategorieC) REFERENCES Kategorie (kategorieID)
