@@ -10,6 +10,7 @@ function checkForAdmin()
         return FALSE;
     }
 }
+
 // Stellt DB verbindung her
 function new_db_connect()
 {
@@ -26,6 +27,7 @@ function checkLogin($userCHK, $passwordCHK)
 
     return true;
 }
+
 // Erzeuge einen Hash anhand der eingabe
 function passwordHash($eingabe)
 {
@@ -43,7 +45,9 @@ function getKategorien()
     $conn->close();
     return $results;
 }
-function getAnzahlergebnisse($sql, $repp){ // übergebe select und bekomme die benötigte Seitenzahl zurüclgeliefert
+
+function getAnzahlergebnisse($sql, $repp)
+{ // übergebe select und bekomme die benötigte Seitenzahl zurüclgeliefert
     $conn = new_db_connect();
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -74,9 +78,9 @@ function getItemnr($durchlauf)
     }
 }
 
-function getArtikelwith($sql,$start,$res){
+function getArtikelwith($sql, $start, $res)
+{
     $conn = new_db_connect();
-
     $stmt = $conn->prepare($sql);                                                       // Prepared Statement
     $stmt->bind_param("dd", $start, $res);               // Prepared Statement
     $stmt->execute();
@@ -85,6 +89,20 @@ function getArtikelwith($sql,$start,$res){
         die('Could not query:' . $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
     }
 
+    return $result;
+}
+
+function getArtikelSearch($sql, $start, $res,$suche)
+{
+    $conn = new_db_connect();
+
+    $param = "%{$suche}%";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sdd", $param, $start_from, $res_per_page);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    echo $result->num_rows . "<br>";
+    echo "Suchergebnisse für " . $suche;
     return $result;
 }
 

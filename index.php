@@ -38,8 +38,7 @@ if (isset($_GET['page']) && ctype_digit(strval($_GET['page']))) {
 if (isset($_POST['search'])) {      // prüft ob suchergebnisse mitgegeben wurden
     $suche = $_POST['suchbegriff'];
     $search = TRUE;
-    //$searchString = "where name LIKE %?%";
-} else $search = FALSE;
+   } else $search = FALSE;
 
 // Prüft ob Knopf gedrückt wurde
 if (isset($_GET['addcart'])) { // Weiterer eintrag in den Warenkorb
@@ -69,15 +68,12 @@ $start_from = ($page - 1) * $res_per_page;
     <div class="item-1">
         <h1>Sitzathlet Web-Shop</h1>
         <nav class="navi">
-            <!--      <li>Hallo</li>-->
 
             <li><a href="">Aktuelle Angebote </a></li>
             <li><a href="/php/search.php">Suche</a></li>
             <li><a href="/php/warenkorb.php">Warenkorb</a>
-                <div class='itemcount'> <?PHP echo "(" . $_SESSION['itemsImKorb'] . ")"; ?></div>
+                <div class='itemcount'> <?PHP echo "(" . $_SESSION['itemsImKorb'] . ")"; ?></div> <!-- Anzeige der anzahl von items im warenkorb -->
             </li>
-            <!--            <li><a href="/php/warenkorb.php">Warenkorb-->
-            <?PHP //echo "<div class='itemcount'>(".$_SESSION['itemsImKorb'].")</div>"; ?><!--</a></li>-->
             <li><?PHP
                 if (!$loggedin) {   // prüfe Logged in und Wechsle MenüPunkt
                     echo '<a href="../php/login.php">Login</a>';
@@ -98,28 +94,19 @@ $start_from = ($page - 1) * $res_per_page;
     <!-- php part mit while zum auslesen der Daten aus der SB -->
     <?PHP
 
-    $sqA = "SELECT * FROM Artikel ";
-    $sqB = " limit ?,?";
 
-////////////////////////////
     $conn = new_db_connect();
 
 
-    if ($search){
+    if ($search) {
         $sql = 'SELECT * FROM Artikel where name  like ? limit ?,? ;';
-        $param = "%{$suche}%";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sdd", $param, $start_from, $res_per_page );
-        $stmt->execute();
-        $result = $stmt->get_result();
-        echo  $result->num_rows."<br>";
-        echo "Suchergebnisse für ".$suche;
-    }else {
+        $result = getArtikelSearch($sql, $start_from, $res_per_page,$suche);
+    } else {
         $sql = "SELECT * FROM Artikel limit ?,?";
         $result = getArtikelwith($sql, $start_from, $res_per_page);
 
     }
-     // Prepared Statement
+    // Prepared Statement
 
 
     if (!$result) {
@@ -128,7 +115,7 @@ $start_from = ($page - 1) * $res_per_page;
     ///////////////////////////////////////////////
 
     // Standart abfrage $sql = "SELECT * FROM Artikel limit ?,?";
-   // $result = getArtikelwith($sql, $start_from, $res_per_page);
+    // $result = getArtikelwith($sql, $start_from, $res_per_page);
 
     $durchlauf = 0; // durchlauf counter für while schleife ( helper) aufbau GRID
     while ($row = $result->fetch_array()) {

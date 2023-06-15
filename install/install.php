@@ -1,4 +1,3 @@
-
 <?php
 include("../php/admin/util.inc.php");
 if (isset($_POST['username'])){
@@ -14,9 +13,9 @@ if (isset($_POST['username'])){
     $passwort = $_POST['Passwort'];
     $passwortRe = $_POST['PasswortRe'];
     $isadmin = 1;
-    if ($passwort != $passwortRe){
+    if ($passwort != $passwortRe) {
 
-        die( "Passwörter stimmen nicht überein!");
+        die("Passwörter stimmen nicht überein!");
     }
 
     $passHash = passwordHash($passwort);    // erzeuge passwort hash
@@ -33,8 +32,7 @@ if (isset($_POST['username'])){
     $runtimes = 0;
     $op_data = '';
     $lines = file($filename);
-    foreach ($lines as $line)
-    {
+    foreach ($lines as $line) {
 //        echo "<br>".$runtimes;
 //        $runtimes++;
         if (substr($line, 0, 2) == '--' || $line == '')//This IF Remove Comment Inside SQL FILE
@@ -56,8 +54,8 @@ if (isset($_POST['username'])){
     }
     // Admin User nach vorgaben erstellen
     $admin = "INSERT INTO `User`( `VorName`, `NachName`, `Adresse`, `Telefon`, `EmailAdresse`, `LoginName`, `PasswortHash`, `istAdmin`) VALUES (?,?,?,?,?,?,?,?)";
-    $stmt =$connb->prepare($admin);
-    $stmt->bind_param("sssssssi",$vorname,$nachname, $adresse, $telefon, $email, $login, $passHash, $isadmin);               // Prepared Statement
+    $stmt = $connb->prepare($admin);
+    $stmt->bind_param("sssssssi", $vorname, $nachname, $adresse, $telefon, $email, $login, $passHash, $isadmin);               // Prepared Statement
     $stmt->execute();
 //
 //    $sql = "CREATE USER 'shop'@'localhost' IDENTIFIED VIA mysql_native_password USING '7_C@U!D7en(guxK3';GRANT USAGE ON *.* TO 'shop'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;GRANT ALL PRIVILEGES ON `webshop`.* TO 'shop'@'localhost';";
@@ -81,18 +79,18 @@ if (isset($_POST['username'])){
 <form action="install.php" method="post">
     <h1>Installation Datenbank admin user der SQL zum erstellen</h1>
     <p>SQL Username</p><input type="text" name="username" required>
-    <p>SQL Pssswort</p><input type ="password" name="password" required>
+    <p>SQL Pssswort</p><input type="password" name="password" required>
     <br>
     <br>
     <h1>Benutzer für den Admin bereich anlegen</h1>
     <input type="text" name="Vorname" value="" placeholder="Vorname" required>
- <input type="text" name="Nachname" value="" placeholder="Nachname" required>
- <input type="text" name="Adresse" value="" placeholder="Adresse" required>
- <input type="tel" name="Telefon" value="" placeholder="telefon" required>
- <input type="email" name="Email" value="" placeholder="email" required>
- <input type="text" name="LoginName" value="admin" placeholder="" required>
- <input type="text" name="Passwort" value="" placeholder="Passwort" required>
- <input type="text" name="PasswortRe" value="" placeholder="Passwort wiederholen" required>
+    <input type="text" name="Nachname" value="" placeholder="Nachname" required>
+    <input type="text" name="Adresse" value="" placeholder="Adresse" required>
+    <input type="tel" name="Telefon" value="" placeholder="telefon" required>
+    <input type="email" name="Email" value="" placeholder="email" required>
+    <input type="text" name="LoginName" value="admin" placeholder="" required>
+    <input type="text" name="Passwort" value="" placeholder="Passwort" required>
+    <input type="text" name="PasswortRe" value="" placeholder="Passwort wiederholen" required>
 
 
     <input type="submit" value="erstellen">

@@ -8,7 +8,7 @@ $conn = new_db_connect();
 if (isset($_SESSION['cart'])) {
     $myCart = unserialize($_SESSION['cart']);
 }
-if (isset($_GET['Bestellungdone'])){
+if (isset($_GET['Bestellungdone'])) {
     $bestelldone = TRUE;
 }
 
@@ -43,7 +43,7 @@ if (isset($_GET['order'])) {
         // zu der Bestellung wird jeder artikel als Position aufgeführt
         foreach ($myCart->getCart() as $key => $i) {
             $artID = $i->getId();
-            $menge =$i->getMenge();
+            $menge = $i->getMenge();
             $sql = "INSERT INTO `BestellungenPos`( `bestellungID`, artikelID,`anzahl` ) VALUES (?,?,?)";
             $conn = new_db_connect();
             $stmt = $conn->prepare($sql);
@@ -53,9 +53,9 @@ if (isset($_GET['order'])) {
         $myCart->clearCart();
         $_SESSION['cart'] = serialize($myCart);
         $conn->close();
-        header ('location: ?Bestellungdone');
+        header('location: ?Bestellungdone');
     } else {
-        header ('location: login.php');
+        header('location: login.php');
     }
 
 }
@@ -72,7 +72,7 @@ if (isset($_GET['order'])) {
         <link rel="stylesheet" href="../css/warenkorb.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Warenkorb</title>
     </head>
     <body>
 
@@ -141,7 +141,9 @@ if (isset($_GET['order'])) {
     <input type="submit" value="Bestellen" name="order">
     </form>
 
-    <?PHP if ($bestelldone) { echo " <h1>Ihre Bestellung wurde abgeschickt</h1> ";} ?>
+    <?PHP if ($bestelldone) {
+        echo " <h1>Ihre Bestellung wurde abgeschickt</h1> ";
+    } ?>
     </body>
     </html>
 

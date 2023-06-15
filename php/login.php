@@ -31,6 +31,7 @@ if (isset($_SESSION["user"])) {
         $stmt->bind_param("ss", $login, $passwordhash);
         $stmt->execute();
         $result = $stmt->get_result();
+
         $r = $result->fetch_array();
         $rowCount = mysqli_num_rows($result);
 
@@ -55,10 +56,10 @@ if (isset($_SESSION["user"])) {
     ?>
     <form action="login.php" method="post">
         <div class="form-group">
-            <input type="text" placeholder="Enter Login name:" name="loginname" class="form-control">
+            <input type="text" placeholder="Login Namen Eingeben:" name="loginname" class="form-control">
         </div>
         <div class="form-group">
-            <input type="password" placeholder="Enter Password:" name="password" class="form-control">
+            <input type="password" placeholder="Passwort Eingeben:" name="password" class="form-control">
         </div>
         <div class="form-btn">
             <input type="submit" value="Login" name="login" class="btn btn-primary">

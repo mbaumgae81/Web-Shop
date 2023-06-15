@@ -1,6 +1,7 @@
 # Web-Shop
+
 Installations anleitung
-Ordner 
+Ordner
 <code>
 / httpDocsRoot
 |--css
@@ -19,6 +20,7 @@ http://meinserver.de/install/install.php öffnen
 Wie im Bild zu sehen kann hier ein Datenbank admin verwendet werden um den kontakt mit der SQL DB zu erstellen.
 
 Zusätzlich wird auch gleich ein Admin user erstellt. Dieser ist für die verwaltung innerhalb der Anwendung.
+
 - Zugriff auf das Adminpanel
 - Berechtigung zum erstellen von kategorien
 - erstellen von Artikeln
