@@ -8,45 +8,20 @@ session_start();
     if (isset($_SESSION['cart'])){
         $myCart =  unserialize($_SESSION['cart']);
     }
-
-    if (isset($_GET['deleteitem'])){
-        $iddel = $_GET['deleteitem'];
-        $myCart->delFromCart($iddel);
-        $_SESSION['itemsImKorb']= $myCart->getAnzahlItems();
-
-        $_SESSION['cart'] = serialize($myCart);
-        header("Location: warenkorb.php");
-    }
-    if (isset($_GET['Aktualisieren'])){
-        foreach ($myCart->getCart() as $key=>$i) {
-         $i->setMenge($_GET[$key]);
-        }
-    } else if (isset($_GET['order'])){
-        // Bestellung  @TODO Funktion Testen Datensätze schreiben
-
-        // INSERT INTO `BestellungenPos`(`bestellungID`, `artikelID`, `anzahl`) VALUES ('[value-1]','[value-2]','[value-3]')
-        //INSERT INTO `Bestellungen`(`bestellungID`, `datum`, `const_userID`, `artikelID`, `userID`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]')
-        //
-
-        $sql ="";
-        $conn = new_db_connect();
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("", );
-        $result = $stmt->execute();
-        $orderID = $conn->insert_id();
-    }
-
-//    $myCart = $_SESSION['cart'];
-///
-//$myCart = unserialize( $_SESSION['cart']);
-
+    $myCart = $_SESSION['cart'];
+//$myCart = new cart();
+//$_SESSION['cart'] = serialize($myCart);
+//echo " --";
+$myCart = unserialize( $_SESSION['cart']);
+ //$myCart->addToCart(1,1);
+//    $myCart->addToCart(2,2);
+//
     // Zeige artikel des Warenkorbs an
 ?> 
 
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <link rel="stylesheet" href="../css/warenkorb.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -55,18 +30,14 @@ session_start();
     
 <table>
 <tr>
-    <th>Artikel</th>
-    <th>Preis einzeln</th>
-    <th>Menge</th>
-    <th>Preis Gesamt</th>
-    <th>löschen</th>
-<!--    <th>KEY</th>-->
+    <td>Artikel</td>
+    <td>Preis einzeln</td>
+    <td>Menge</td>
+    <td>Preis Gesamt</td>
 
 </tr>
-<?php
-        $Total =0;
-        $akteintrag =0;  // zum zählen der Array Position
-    foreach($myCart->getCart() as $key=>$i){
+<?php 
+    foreach($myCart->getCart() as $i){
         $artID= $i->getId();
 
         $sql = "Select * FROM Artikel where artikelID = ? ";
@@ -75,45 +46,31 @@ session_start();
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_array();
-        $rowGesPreis = $row['preis'] * $i->getMenge();
-        $Total += $rowGesPreis;
 ?>
-    <form>
+
         <tr>
             <td>
                 <?PHP echo $row['name']; ?>
             </td>
             <td>
-                <?PHP $ausgabe = sprintf("%01.2f", $row['preis']);echo $ausgabe."€"; ?>
+                <?PHP echo $row['preis']; ?> 
             </td>
             <td>
-                <input type="number" value="<?PHP echo $i->getMenge(); ?>" name="<?PHP echo $key?>" >
-
+                <?PHP echo $i->getMenge(); ?>  
             </td>
 
             <td>
-                <?PHP $ausgabe= sprintf("%01.2f", $rowGesPreis); echo $ausgabe."€"; ?>
+                <?PHP echo $row['preis'] * $i->getMenge(); ?> 
             </td>
-            <td><a href="?deleteitem=<?php echo $key; ?>" >
-                <img heigt="30em" width="30em"
-                     src="../img/remove.png"></a>
-            </td>
-
-
-
     </tr>
      <td>
-
-
-
+        
+     
      <?php
-     $akteintrag++;
     }
 ?>
-</table>
-         <input type="submit" value="Aktualisieren" name="Aktualisieren"> <p>Gesamt Preis Bestellung: <?PHP $ausgabe= sprintf("%01.2f",$Total); echo $ausgabe."€"; ?> </p>
-    </form>
 
+</table>
 
 
 
