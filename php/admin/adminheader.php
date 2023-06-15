@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../css/adminpanel.css" rel="stylesheet" type="text/css" media="screen" />
-    <title>Document</title>
+    <link href="../../css/adminpanel.css" rel="stylesheet" type="text/css" media="screen"/>
+    <title>Administration Webshop</title>
 </head>
 <body>
 <header>
@@ -20,7 +20,7 @@
         </li>
 
         <li>
-            <a href="neuekategorie.php" >Kategorien erstellen</a>
+            <a href="neuekategorie.php">Kategorien erstellen</a>
         </li>
         <li>
             <a href="../../index.php">Zum Shop</a>
