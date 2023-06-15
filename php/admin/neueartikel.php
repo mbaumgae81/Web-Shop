@@ -28,7 +28,11 @@ include("util.inc.php");
         </tr>
         <tr>
             <td>Ist verfügbar:</td>
-            <td><input type="checkbox" name="verfuegbar" value="1" ></td>
+            <td><input type="checkbox" name="verfuegbar" value="1" checked></td>
+        </tr>
+        <tr>
+        <td>Ist im Angebot:</td>S
+        <td><input type="checkbox" name="angebot" value="1" checked></td>
         </tr>
         <tr>
             <td>Kategorie</td>
@@ -36,7 +40,9 @@ include("util.inc.php");
                 <select name="kategorie" required>
                     <?PHP
                     $results = getKategorien();
-                    while ($r = $results->fetch_array()) { ?>
+                    while ($r = $results->fetch_array()) {
+                        echo $r['kategorieID'];
+                        ?>
                         <option value="<?php echo $r['kategorieID']; ?>">  <?php echo $r['bezeichnung']; ?></option>
                         <?PHP
                     }

@@ -1,0 +1,3 @@
+INSERT INTO `Bestellungen`(`bestellungID`, `datum`, `const_userID`, `artikelID`, `userID`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]')
+
+INSERT INTO `BestellungenPos`(`bestellungID`, `artikelID`, `anzahl`) VALUES ('[value-1]','[value-2]','[value-3]')
