@@ -2,11 +2,14 @@
 include("../php/admin/util.inc.php");
 include("cart.php");
 session_start();
-
+$bestelldone = FALSE;
 $conn = new_db_connect();
 
 if (isset($_SESSION['cart'])) {
     $myCart = unserialize($_SESSION['cart']);
+}
+if (isset($_GET['Bestellungdone'])){
+    $bestelldone = TRUE;
 }
 
 if (isset($_GET['deleteitem'])) {
@@ -21,12 +24,10 @@ if (isset($_GET['Aktualisieren'])) {
     foreach ($myCart->getCart() as $key => $i) {
         $i->setMenge($_GET[$key]);
     }
-} else if (isset($_GET['order'])) {
+}
+if (isset($_GET['order'])) {
     // Bestellung  @TODO Funktion Testen Datensätze schreiben
     if (isset($_SESSION['user'])) {
-        // INSERT INTO `BestellungenPos`(`bestellungID`, `artikelID`, `anzahl`) VALUES ('[value-1]','[value-2]','[value-3]')
-        //INSERT INTO `Bestellungen`(`bestellungID`, `datum`, `artikelID`, `userID`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]')
-        //
         $userID = $_SESSION['userID'];
         $date = date("Y-m-d H:i:s");
         // erstelle die Bestellung und hole die Last ID
@@ -52,6 +53,9 @@ if (isset($_GET['Aktualisieren'])) {
         $myCart->clearCart();
         $_SESSION['cart'] = serialize($myCart);
         $conn->close();
+        header ('location: ?Bestellungdone');
+    } else {
+        header ('location: login.php');
     }
 
 }
@@ -137,7 +141,7 @@ if (isset($_GET['Aktualisieren'])) {
     <input type="submit" value="Bestellen" name="order">
     </form>
 
-
+    <?PHP if ($bestelldone) { echo " <h1>Ihre Bestellung wurde abgeschickt</h1> ";} ?>
     </body>
     </html>
 

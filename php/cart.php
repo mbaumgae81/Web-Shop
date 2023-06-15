@@ -50,7 +50,10 @@ class cart
 
     function clearCart()
     {
-        unset($this->carry);
+        foreach ($this->cart as $key => $i) {
+            $this->delFromCart($key);
+        }
+
     }
 
     function checkForID($id)

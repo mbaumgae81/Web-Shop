@@ -14,7 +14,7 @@ if (isset($_SESSION['cart'])) {
     $itemsImKorb = $_SESSION['itemsImKorb'];
 } else {
     $myCart = new cart();
-    $_SESSION['itemsImKorb']=0;
+    $_SESSION['itemsImKorb'] = 0;
     $_SESSION['cart'] = serialize($myCart);
 }
 // Read user und setze bool
@@ -35,12 +35,18 @@ if (isset($_GET['page']) && ctype_digit(strval($_GET['page']))) {
 } else {
     $page = 1;
 }
+if (isset($_POST['search'])) {      // prüft ob suchergebnisse mitgegeben wurden
+    $suche = $_POST['suchbegriff'];
+    $search = TRUE;
+    //$searchString = "where name LIKE %?%";
+} else $search = FALSE;
+
 // Prüft ob Knopf gedrückt wurde
 if (isset($_GET['addcart'])) { // Weiterer eintrag in den Warenkorb
     $addID = $_GET['addcart'];
     $menge = 1; // Standart immer 1 bei press on cart
     $myCart->addToCart($addID, $menge);
-    $_SESSION['itemsImKorb']= $myCart->getAnzahlItems();
+    $_SESSION['itemsImKorb'] = $myCart->getAnzahlItems();
     $_SESSION['cart'] = serialize($myCart);
 }
 
@@ -67,8 +73,11 @@ $start_from = ($page - 1) * $res_per_page;
 
             <li><a href="">Aktuelle Angebote </a></li>
             <li><a href="/php/search.php">Suche</a></li>
-            <li><a href="/php/warenkorb.php">Warenkorb</a><div class='itemcount'> <?PHP echo "(".$_SESSION['itemsImKorb'].")"; ?></div></li>
-<!--            <li><a href="/php/warenkorb.php">Warenkorb--><?PHP //echo "<div class='itemcount'>(".$_SESSION['itemsImKorb'].")</div>"; ?><!--</a></li>-->
+            <li><a href="/php/warenkorb.php">Warenkorb</a>
+                <div class='itemcount'> <?PHP echo "(" . $_SESSION['itemsImKorb'] . ")"; ?></div>
+            </li>
+            <!--            <li><a href="/php/warenkorb.php">Warenkorb-->
+            <?PHP //echo "<div class='itemcount'>(".$_SESSION['itemsImKorb'].")</div>"; ?><!--</a></li>-->
             <li><?PHP
                 if (!$loggedin) {   // prüfe Logged in und Wechsle MenüPunkt
                     echo '<a href="../php/login.php">Login</a>';
@@ -85,22 +94,41 @@ $start_from = ($page - 1) * $res_per_page;
         </nav>
     </div>
 
-    <!-- Menu deaktiviert
-    <div class="sidebar">
-        <h2>Menu</h2>
-        <ol>Auswahl 1</ol>
-        <ol>Auswahl 2</ol>
-        <ol>Auswahl 3</ol>
-        <ol>Auswahl 4</ol>
-    </div>
--->
-    <!-- Contet -->
+
     <!-- php part mit while zum auslesen der Daten aus der SB -->
     <?PHP
 
-   //
-    $sql = "SELECT * FROM Artikel limit ?,?";
-    $result = getArtikelwith($sql, $start_from, $res_per_page);
+    $sqA = "SELECT * FROM Artikel ";
+    $sqB = " limit ?,?";
+
+////////////////////////////
+    $conn = new_db_connect();
+
+
+    if ($search){
+        $sql = 'SELECT * FROM Artikel where name  like ? limit ?,? ;';
+        $param = "%{$suche}%";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sdd", $param, $start_from, $res_per_page );
+        $stmt->execute();
+        $result = $stmt->get_result();
+        echo  $result->num_rows."<br>";
+        echo "Suchergebnisse für ".$suche;
+    }else {
+        $sql = "SELECT * FROM Artikel limit ?,?";
+        $result = getArtikelwith($sql, $start_from, $res_per_page);
+
+    }
+     // Prepared Statement
+
+
+    if (!$result) {
+        die('Could not query:' . $conn->error);                                      // Wenn es keine ergbnis gibt wird Fehler ausgeggeben
+    }
+    ///////////////////////////////////////////////
+
+    // Standart abfrage $sql = "SELECT * FROM Artikel limit ?,?";
+   // $result = getArtikelwith($sql, $start_from, $res_per_page);
 
     $durchlauf = 0; // durchlauf counter für while schleife ( helper) aufbau GRID
     while ($row = $result->fetch_array()) {
@@ -158,12 +186,6 @@ $start_from = ($page - 1) * $res_per_page;
         $alleartikel = "select * from Artikel";
         $total_pages = getAnzahlergebnisse($alleartikel, $res_per_page);
         echo $total_pages;
-        //$result = $conn->query($db, $res_per_page);
-//        // Anzahl der Ergebnisse aus SQL Abfrage
-//        $total_records = $result->num_rows;
-//        // Ergebnisse gesamt durch Ergebnisse pro Seite teilen
-//        $total_pages = ceil($total_records / $res_per_page);
-//        $conn->close();
 
         for ($i = 1; $i <= $total_pages; $i++) {
             echo "<a href='?page=" . $i . "'>Seite " . $i . "</a> ";
