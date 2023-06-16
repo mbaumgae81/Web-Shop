@@ -20,21 +20,15 @@ if (isset($_SESSION["user"])) {
 <body>
 <div class="container">
     <?php
+    if (isset($_GET['order'])){
+        echo "<div class='alert alert-danger'>Bitte anmelden vor der Bestellung!</div>";
+    }
     if (isset($_POST["login"])) {
         $login = $_POST["loginname"];
         $passwordhash = passwordHash($_POST["password"]); // Erzeugt einen hash aus dem PAsswort
-
-
-        $conn = new_db_connect();
-        $sql = "SELECT * FROM User WHERE LoginName = ? and PasswortHash = ? ";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $login, $passwordhash);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
+        $result = checkLogin($login, $passwordhash);
         $r = $result->fetch_array();
         $rowCount = mysqli_num_rows($result);
-
 
         if ($rowCount > 0) {
             $_SESSION["user"] = "yes";                  // Daten zum user werden in der Session Gespeichert
@@ -65,7 +59,7 @@ if (isset($_SESSION["user"])) {
             <input type="submit" value="Login" name="login" class="btn btn-primary">
         </div>
     </form>
-    <div><p>Noch nicht Registriert ?<a href="registration.php">Register Here</a></p></div>
+    <div><p>Noch nicht registriert ?<a href="registration.php">Register Here</a></p></div>
 </div>
 </body>
 </html>

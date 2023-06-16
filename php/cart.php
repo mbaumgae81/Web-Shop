@@ -11,7 +11,6 @@ class cart
         $idExist = $this->checkForID($id);
         if ($idExist) {                                     // Prüfe ob schon ein Artikel mit derselben ID vorhanden ist
             $key = $this->searchKeyFromID($id);         // lese ID des Array eintrages
-
             $aktMenge = $this->cart[$key]->getMenge();   // wenn ja, hole mir von eben diesem artikel die menge aus dem cart
             $aktMenge += 1;                              // füge einen hinzu
             $this->cart[$key]->setMenge($aktMenge);      //  und schreibe die neue Menge in den Cart dieser id

@@ -25,7 +25,13 @@ function new_db_connect()
 function checkLogin($userCHK, $passwordCHK)
 {
 
-    return true;
+    $conn = new_db_connect();
+    $sql = "SELECT * FROM User WHERE LoginName = ? and PasswortHash = ? ";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $userCHK, $passwordCHK);
+    $stmt->execute();
+    $result =$stmt->get_result();
+    return $result;
 }
 
 // Erzeuge einen Hash anhand der eingabe

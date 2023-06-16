@@ -55,7 +55,7 @@ if (isset($_GET['order'])) {
         $conn->close();
         header('location: ?Bestellungdone');
     } else {
-        header('location: login.php');
+        header('location: login.php?order');
     }
 
 }
